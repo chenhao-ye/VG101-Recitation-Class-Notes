@@ -41,12 +41,12 @@ For more details about search path, you can refer to \url{https://ww2.mathworks.
 \subsection{Syntax}
 \begin{frame}{Operators \& Keys}
 \begin{itemize}
-\item ``+'', ``-'', ``*'', ``/'', ``.*'', ``./'', ``\ \^\ '', ``\ .\^\ '': matrix or elementwise arithmetic
+\item ``+'', ``-'', ``*'', ``/'', ``.*'', ``./'', ``\ \^\ '', ``\ .\^\ '': matrix or element-wise arithmetic
 \item ``='': assignment
 \item ``=='': equal
-\item ``\&\&'', ``||'': logicial and / or
+\item ``\&\&'', ``||'': logical and / or
 \item ``\%'': comment. Will be ignored by MATLAB. Make the code easier to understand
-\item ``;'': suppress output. Please add it to every line that you do not expect output! Extra output may result in dection
+\item ``;'': suppress output. Please add it to every line that you do not expect output! Extra output may result in deduction
 \item ``$\uparrow$, $\downarrow$'': view history
 \item Tab: indent
 \item ``clc'': clear command window
@@ -54,9 +54,96 @@ For more details about search path, you can refer to \url{https://ww2.mathworks.
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Variables}
+A valid variable name should
+\begin{itemize}
+\item Start with a letter (either upper or lower case)
+\item Followed by letters/digits/underscores
+\item Note that MATLAB is case sensitive
+\end{itemize}
+A good variable name should\footnotemark
+\begin{itemize}
+\item Have appropriate length (approximately 3 to 10 letters)
+\item Self explain its function
+\begin{itemize}
+\item bad variable name:``a1'', ``a2, ``a3'', ``b'', ``c'', ``d'', ``e'', ``f''
+\item good variable name: ``counter'', ``input'', ``flag''
+\end{itemize}
+\end{itemize}
+Iteration variables ``i'', ``j'', ``k''
+\begin{itemize}
+\item Short, everyone use them
+\end{itemize}
+\footnotetext{Not required by VG101 but a good habit.}
+\end{frame}
+
+\begin{frame}{Variables}
+MATLAB does not require variable declaration. When MATLAB encounters a new variable name, it automatically creates the variable and allocates memory for it. You don't need to worry about the type or size of the variable, MATLAB do all the things for you. 
+\begin{itemize}
+\item This is good but if you misspell, you get in trouble 
+\item Double click on a variable, and MATLAB will darken places it appears
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Matrix \& Vector \& Array}
+\begin{block}{Definition}
+Matrix: two-dimensional numeric arrays.\\
+Vector: one-dimensional numeric arrays.
+\end{block}
+How to initialize array?
+\begin{itemize}
+\item A = [1, 2, 3; 4, 5, 6; 7, 8, 9]
+\item A = zeros(3, 2) (row first, column next)
+\end{itemize}
+How to initialize vector?
+\begin{itemize}
+\item A = [1:100] (step is 1 by default)
+\item A = [0:0.01:1] (start, step, end)
+\end{itemize}
+MATLAB allows dynamic changes of array sizes. For example:
+\begin{itemize}
+\item A = [A; A]
+\item A = [0, A] + [A, 0] (What can this do?)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Matrix \& Vector \& Array}
+How to access an element of a matrix?
+\begin{itemize}
+\item A(2, 3) = The element at the second row and third column
+\end{itemize}
+How to access an element of a vector?
+\begin{itemize}
+\item A(2) = The second element in A
+\end{itemize}
+How to cut a sub matrix?
+\begin{itemize}
+\item Use ``:'' ! It is the most useful symbol in MTALAB.
+\item A(: , 1) = the first column of A
+\item A(1, : ) = the first row of A
+\item A(1: 3, :) = the sub matrix consisting the first to third row of A
+\item A(1: 3, 1: 3) = the upper-left corner 3 $\times$ 3 sub matrix of A
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Matrix \& Vector \& Array}
+\begin{block}{Aside: Matrix \& Parallel Computation\footnotemark}
+Why usually it's much faster to use matrix operation other than working with each element sequentially? This is mainly because of parallel computation. When a large problem can be divided into smaller tasks and they can be solved simutaneusly, it can save a lot of time. Matrix is excellent for parallel computation since the it can be divided into sub matrixes. Usually, matrix operation is 10 to 1000 times faster than iteration through elements.
+\end{block}
+\footnotetext{``Aside'' means the content below will be discussed in more advanced courses, but it can be quite helpful if you know it now.}
+\end{frame}
+
+\begin{frame}
+\begin{block}{Aside: Array \& Data Structure}
+Array is the first and most basic data structure you will met. Data structure is a data organization, management and storage format that enables efficient access and modification.\footnotemark You can think of array as cabinet in our bathroom in D22/D21. Once you remember the number on the cabinet (for array, indices), you can quickly access the content in it. Array, regardless its dimension, is stored as a 1D sequence in memory. This enables convenient memory management and quick access. In latter courses, you will encounter more data structures. 
+\end{block}
+\footnotemark{Reference: \url{https://en.wikipedia.org/wiki/Data_structure}}
+\end{frame}
+
+
 \begin{frame}{Some Special Variables \& Constants}
 \begin{block}{Tips}
-\textbf{All variables in MATLAB are matrix.} Scalar is essential a $1\times1$ matix, but it allows some operations that may be invalid for a $1\times1$ matrix.
+\textbf{All variables in MATLAB are matrix.} Scalar is essential a $1\times1$ matrix, but it allows some operations that may be invalid for a $1\times1$ matrix.
 \end{block}
 \begin{itemize}
 \item ``ans'': default output variable; do not use ``ans'' as your own variable name in your script
@@ -69,7 +156,7 @@ For more details about search path, you can refer to \url{https://ww2.mathworks.
 \begin{block}{save \& load}
 \begin{itemize}
 \item save xxx: save all current variables into .mat file
-\item load xxx: load .mat file; will not clear variables alread in workspace; will cover the variable in workspace if two variables share same name
+\item load xxx: load .mat file; will not clear variables already in workspace; will cover the variable in workspace if two variables share same name
 \end{itemize}
 \end{block}
 \end{frame}
@@ -142,7 +229,7 @@ Outputs: \\
 \begin{frame}{M-file}
 Source code of MATLAB code is stored in .m files. It is essential text file, which means actually you can modify it as for .txt file. There are two kinds of .m file: script and function.
 \begin{block}{script}
-Scripts are essentially putting the code line by line to the command window. A script has no specific input and output. It operates on the value of workspace. Note that, if you do not clear the workspace before running a scipt, all variables in the workspace will be used by script, so of which are not intended, and may cause what you call ``XUANXUE'' (dark magic). \footnotemark
+Scripts are essentially putting the code line by line to the command window. A script has no specific input and output. It operates on the value of workspace. Note that, if you do not clear the workspace before running a script, all variables in the workspace will be used by script, so of which are not intended, and may cause what you call ``XUANXUE'' (dark magic). \footnotemark
 \end{block}
 \begin{block}{function}
 Functions take specific input and produce output. A function only working on its own varivales, which you can take it as a separate box. It promotes \textbf{code reuse} and \textbf{decoupling}.
@@ -152,7 +239,7 @@ Functions take specific input and produce output. A function only working on its
 
 \begin{frame}{M-file}
 
-\begin{block}{Aside: Code Reuse \& Decoupling\footnotemark\footnotemark}
+\begin{block}{Aside: Code Reuse \& Decoupling\footnotemark}
 Code reuse not only means less code you need to produce; more importantly, it means less code you need to take care (debug, modify, or performance improvement). Decoupling means we would like the code be separated into modules, and limit the coupling only to the interfaces, i.e. where modules connect.
 \end{block}
 \begin{minipage}{0.48\textwidth}
@@ -169,6 +256,9 @@ Code reuse not only means less code you need to produce; more importantly, it me
 		\includegraphics[width=0.4\textwidth]{pic/high-coupling.jpg}
 	\end{figure}
 \end{minipage}
-\footnotetext[2]{``Aside'' means the content below will be discussed in more advanced courses, but it can be quite helpful if you know it now.}
-\footnotetext[3]{Reference and thanks: some of content is from \url{https://github.com/tripack45/VE280-Notes}.}
+\footnotetext{Reference and thanks: some of content is from \url{https://github.com/tripack45/VE280-Notes}.}
+\end{frame}
+
+\begin{frame}{Input \& Output}
+Input
 \end{frame}
