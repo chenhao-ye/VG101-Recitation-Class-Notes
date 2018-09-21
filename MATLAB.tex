@@ -44,7 +44,7 @@ For more details about search path, you can refer to \url{https://ww2.mathworks.
 \item ``+'', ``-'', ``*'', ``/'', ``.*'', ``./'', ``\ \^\ '', ``\ .\^\ '': matrix or element-wise arithmetic
 \item ``='': assignment
 \item ``=='': equal
-\item ``\&\&'', ``||'': logical and / or
+\item ``\&\&'', ``$||$'': logical and / or
 \item ``\%'': comment. Will be ignored by MATLAB. Make the code easier to understand
 \item ``;'': suppress output. Please add it to every line that you do not expect output! Extra output may result in deduction
 \item ``$\uparrow$, $\downarrow$'': view history
@@ -66,7 +66,7 @@ A good variable name should\footnotemark
 \item Have appropriate length (approximately 3 to 10 letters)
 \item Self explain its function
 \begin{itemize}
-\item bad variable name:``a1'', ``a2, ``a3'', ``b'', ``c'', ``d'', ``e'', ``f''
+\item bad variable name:``a1'', ``a2, ``a3'', ``aa'', ``aaaa'', ``b'', ``c'', ``d''
 \item good variable name: ``counter'', ``input'', ``flag''
 \end{itemize}
 \end{itemize}
@@ -74,7 +74,7 @@ Iteration variables ``i'', ``j'', ``k''
 \begin{itemize}
 \item Short, everyone use them
 \end{itemize}
-\footnotetext{Not required by VG101 but a good habit.}
+\footnotetext{Not required by VG101 but a really good habit.}
 \end{frame}
 
 \begin{frame}{Variables}
@@ -118,7 +118,7 @@ How to access an element of a vector?
 \end{itemize}
 How to cut a sub matrix?
 \begin{itemize}
-\item Use ``:'' ! It is the most useful symbol in MTALAB.
+\item Use ``:''  It is the most useful symbol in MTALAB.
 \item A(: , 1) = the first column of A
 \item A(1, : ) = the first row of A
 \item A(1: 3, :) = the sub matrix consisting the first to third row of A
@@ -135,7 +135,7 @@ Why usually it's much faster to use matrix operation other than working with eac
 
 \begin{frame}
 \begin{block}{Aside: Array \& Data Structure}
-Array is the first and most basic data structure you will met. Data structure is a data organization, management and storage format that enables efficient access and modification.\footnotemark You can think of array as cabinet in our bathroom in D22/D21. Once you remember the number on the cabinet (for array, indices), you can quickly access the content in it. Array, regardless its dimension, is stored as a 1D sequence in memory. This enables convenient memory management and quick access. In latter courses, you will encounter more data structures. 
+Array is the first and most basic data structure you will met. Data structure is a data organization, management and storage format that enables efficient access and modification.\footnotemark You can think of array as cabinet in our bathroom in D22/D21. Once you remember the number on the cabinet (for array, indices), you can quickly access the content in it. Array, regardless its dimension, is stored as a 1D sequence in memory. This enables convenient memory management and quick access. In latter courses, you will encounter more complicated data structures. 
 \end{block}
 \footnotemark{Reference: \url{https://en.wikipedia.org/wiki/Data_structure}}
 \end{frame}
@@ -170,6 +170,23 @@ Array is the first and most basic data structure you will met. Data structure is
 \item ``clear / clear all'': clear workspace
 \end{itemize}
 It's good habit to add ``clc'' and ``clear'' at the first of your program, \textbf{especially in your homework}.
+\end{frame}
+
+\begin{frame}{Control Flow}
+A computer program is like a factory that works on data. 
+\begin{block}{Structured programming}
+Three basic structures of computer programming
+\begin{itemize}
+\item sequencial structure
+\item selective structure
+\item cycle structure
+\end{itemize}
+Almost all tasks can be done using these three structures.
+\end{block}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{pic/structure.png}
+\end{figure}
 \end{frame}
 
 \begin{frame}{Control Flow}
@@ -260,5 +277,38 @@ Code reuse not only means less code you need to produce; more importantly, it me
 \end{frame}
 
 \begin{frame}{Input \& Output}
-Input
+A = Input(``Please input: '');
+\begin{itemize}
+\item Most widely used for command window input.
+\item Can be used to input anything you want, including matrix.
+\end{itemize}
+Other ways of Input: 
+\begin{itemize}
+\item fscanf: Used for file input, will be discussed later.
+\item sscanf: Used for string input, not used currently.
+\end{itemize}
+For more information, you can refer to the help function.
+\end{frame}
+
+\begin{frame}{Input \& Output}
+Not adding ``;'' outputs the value of an expression.
+\begin{itemize}
+\item Not recommended. You will receive deduction if you output redundant messages in homework by not adding ``;''.
+\end{itemize}
+disp(A);
+\begin{itemize}
+\item display the value of A with a new line
+\item can display anything you want (number, string, matrix, etc.)
+\end{itemize}
+fprintf \& sprintf
+\begin{itemize}
+\item Both use format symbols
+\item fprintf: print format message on command window/into file
+\item sprintf: print format message into a string
+\item fprintf = disp(sprintf)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Function}
+
 \end{frame}
