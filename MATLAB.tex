@@ -96,12 +96,35 @@ Iteration variables ``i'', ``j'', ``k''
 \footnotetext{Not required by VG101 but a really good habit.}
 \end{frame}
 
-\begin{frame}{Variables}
-MATLAB does not require variable declaration. When MATLAB encounters a new variable name, it automatically creates the variable and allocates memory for it. You don't need to worry about the type or size of the variable, MATLAB do all the things for you. 
+\begin{frame}{Some Special Variables \& Constants}
+\begin{block}{Tips}
+\textbf{All variables in MATLAB are matrix.} Scalar is essential a $1\times1$ matrix, but it allows some operations that may be invalid for a $1\times1$ matrix.
+\end{block}
 \begin{itemize}
-\item This is good but if you misspell, you get in trouble 
-\item Double click on a variable, and MATLAB will darken places it appears
+\item ``ans'': default output variable; do not use ``ans'' as your own variable name in your script
+\item ``i'', ``j'': virtual number
+\item ``Inf'': infinite
+\item ``NaN'': not a number; mostly appear when the result exceed some limit or some errors occur
+\item ``pi''
 \end{itemize}
+
+\begin{block}{Save \& Load}
+\begin{itemize}
+\item save xxx: save all current variables into .mat file
+\item load xxx: load .mat file; will not clear variables already in workspace; will cover the variable in workspace if two variables share same name
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Command}
+\begin{itemize}
+\item ``exist'': test the existence of a varible or a file (exist xxx)
+\item ``global'': declare global variable
+\item ``help'', ``doc'': show document (help xxx; doc xxx)
+\item ``clc'': clear command window
+\item ``clear / clear all'': clear workspace
+\end{itemize}
+It's good habit to add ``clc'' and ``clear'' at the first of your program, \textbf{especially in your homework}.
 \end{frame}
 
 \begin{frame}{Data Types}
@@ -138,17 +161,13 @@ What will happen if we convert number to character?
 \end{figure}
 \end{frame}
 
-\begin{frame}{Matrix \& Vector \& Array}
-\begin{block}{Definition}
-Matrix: two-dimensional numeric arrays.\\
-Vector: one-dimensional numeric arrays.
-\end{block}
+\begin{frame}{Matrix}
 How to initialize array?
 \begin{itemize}
 \item A = [1, 2, 3; 4, 5, 6; 7, 8, 9]
 \item A = zeros(3, 2) (row first, column next)
 \end{itemize}
-How to initialize vector?
+How to initialize matrix?
 \begin{itemize}
 \item A = [1:100] (step is 1 by default)
 \item A = [0:0.01:1] (start, step, end)
@@ -157,17 +176,22 @@ MATLAB allows dynamic changes of array sizes. For example:
 \begin{itemize}
 \item A = [A; A]
 \item A = [0, A] + [A, 0] (What can this do?)
+\item A = [1: n];\\
+	for i = 2 : n\\
+	\ \ \ \ A = [A, [i: n, 1: i - 1]];\\
+	end
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Matrix \& Vector \& Array}
+\begin{frame}{Matrix}
 How to access an element of a matrix?
 \begin{itemize}
 \item A(2, 3) = The element at the second row and third column
 \end{itemize}
-How to access an element of a vector?
+How to access an element of a matrix?
 \begin{itemize}
-\item A(2) = The second element in A
+\item A(2) = The second element in A\\
+\* If A is a 2-D matrix, it means the second element when arranging element of A by column
 \end{itemize}
 How to cut a sub matrix?
 \begin{itemize}
@@ -176,10 +200,11 @@ How to cut a sub matrix?
 \item A(1, : ) = the first row of A
 \item A(1: 3, :) = the sub matrix consisting the first to third row of A
 \item A(1: 3, 1: 3) = the upper-left corner 3 $\times$ 3 sub matrix of A
+\item A(:, [i, j]) = A(:, [j, i])
 \end{itemize}
 \end{frame}
 
-\begin{frame}{String \& Array}
+\begin{frame}{String}
 \begin{block}{String}
 When deal with words or sentences, MATLAB uses string. String is displayed in single quotation marks. String is not a new data type. It is a 1-D character matrix. Therefore, matrix operations all apply on strings.
 \end{block}
@@ -191,53 +216,15 @@ Functions for string:
 Check MATLAB document for usage of these functions.
 \end{frame}
 
-\begin{frame}{Matrix \& Vector \& Array}
-\begin{block}{Aside: Matrix \& Parallel Computation\footnotemark}
-Why usually it's much faster to use matrix operation other than working with each element sequentially? This is mainly because of parallel computation. When a large problem can be divided into smaller tasks and they can be solved simutaneusly, it can save a lot of time. Matrix is excellent for parallel computation since the it can be divided into sub matrixes. Usually, matrix operation is 10 to 1000 times faster than iteration through elements.
-\end{block}
-\footnotetext{``Aside'' means the content below will be discussed in more advanced courses, but it can be quite helpful if you know it now.}
-\end{frame}
-
 \begin{frame}
-\begin{block}{Aside: Array \& Data Structure}
+\begin{block}{Aside: Array \& Data Structure\footnotemark}
 Array is the first and most basic data structure you will met. Data structure is a data organization, management and storage format that enables efficient access and modification.\footnotemark You can think of array as cabinet in our bathroom in D22/D21. Once you remember the number on the cabinet (for array, indices), you can quickly access the content in it. Array, regardless its dimension, is stored as a 1D sequence in memory. This enables convenient memory management and quick access. In latter courses, you will encounter more complicated data structures. 
 \end{block}
+\footnotetext{``Aside'' means the content below will be discussed in more advanced courses, but it can be quite helpful if you know it now.}
 \footnotetext{Reference: \url{https://en.wikipedia.org/wiki/Data_structure}}
 \end{frame}
 
-
-\begin{frame}{Some Special Variables \& Constants}
-\begin{block}{Tips}
-\textbf{All variables in MATLAB are matrix.} Scalar is essential a $1\times1$ matrix, but it allows some operations that may be invalid for a $1\times1$ matrix.
-\end{block}
-\begin{itemize}
-\item ``ans'': default output variable; do not use ``ans'' as your own variable name in your script
-\item ``i'', ``j'': virtual number
-\item ``Inf'': infinite
-\item ``NaN'': not a number; mostly appear when the result exceed some limit or some errors occur
-\item ``pi''
-\end{itemize}
-
-\begin{block}{Save \& Load}
-\begin{itemize}
-\item save xxx: save all current variables into .mat file
-\item load xxx: load .mat file; will not clear variables already in workspace; will cover the variable in workspace if two variables share same name
-\end{itemize}
-\end{block}
-\end{frame}
-
-\begin{frame}{Command}
-\begin{itemize}
-\item ``exist'': test the existence of a varible or a file (exist xxx)
-\item ``global'': declare global variable
-\item ``help'', ``doc'': show document (help xxx; doc xxx)
-\item ``clc'': clear command window
-\item ``clear / clear all'': clear workspace
-\end{itemize}
-It's good habit to add ``clc'' and ``clear'' at the first of your program, \textbf{especially in your homework}.
-\end{frame}
-
-\begin{frame}{M-file \&Script \&Function}
+\begin{frame}{M-file: Script \&Function}
 Source code of MATLAB code is stored in .m files. It is essential text file, which means actually you can modify it as for .txt file. There are two kinds of .m file: script and function.
 \begin{block}{script}
 Scripts are essentially putting the code line by line to the command window. A script has no specific input and output. It operates on the value of workspace. Note that, if you do not clear the workspace before running a script, all variables in the workspace will be used by script, so of which are not intended, and may cause what you call ``XUANXUE'' (dark magic). \footnotemark
@@ -248,7 +235,7 @@ Functions take specific input and produce output. A function only working on its
 \footnotetext{So you see why I mention adding ``clear'' in the front of your code is a good habit.}
 \end{frame}
 
-\begin{frame}{M-file \&Script \&Function}
+\begin{frame}{M-file: Script \&Function}
 \begin{block}{Function syntax}
 When defining:
 \begin{itemize}
@@ -261,13 +248,13 @@ When calling (using):
 \end{block}
 Note when using function:
 \begin{itemize}
-\item You have to use same number of variables to accept the function output values or mistake will happen.
-\item For functions with only one output, if you directly called the function, the output value will be stored into $ans$.
-\item Function name should be the same as the m file name, or it cannot be called.
+\item You should use same number of variables to accept the function output values, or the output with no variables to accept will be discarded.
+\item If you don't specify the variable to accept the function output, MATLAB will create variable "ans" automatically, which is equivalient a single variable to accept function output.
+\item Function name should be the same as the m file name. MATLAB will search file name to call the function.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{M-file \& Script \&Function}
+\begin{frame}{M-file: Script \&Function}
 \begin{block}{Aside: Code Reuse \& Decoupling\footnotemark}
 Code reuse not only means less code you need to produce; more importantly, it means less code you need to take care (debug, modify, or performance improvement). Decoupling means we would like the code be separated into modules, and limit the coupling only to the interfaces, i.e. where modules connect.
 \end{block}
