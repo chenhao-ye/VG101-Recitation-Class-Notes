@@ -1,7 +1,7 @@
 \subsection{About MATLAB}
 \begin{frame}{About MATLAB}
 \begin{itemize}
-\item Commercial and experience (<-> Octave)
+\item Commercial and experience (Octave)
 \item Not for general purpose (no one will write an operating system using MATLAB)
 \item Excel at numerical calculations and plot
 \item Many useful toolboxes (though we will not cover these in this course, you will use some of them in advanced courses)
@@ -36,6 +36,25 @@ It indicates which folder you are currently. When you operate on file (e.g. call
 
 For more details about search path, you can refer to \url{https://ww2.mathworks.cn/help/matlab/matlab_env/what-is-the-matlab-search-path.html?lang=en}.
 \end{block}
+\end{frame}
+
+\begin{frame}{Interface}
+Breakpoint: Useful tool for debugging.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{pic/breakpoint.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Interface}
+Documentation: Instructions for using MATLAB
+\begin{itemize}
+\item usage: doc / doc name (name = function you want to look up)
+\end{itemize}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\textwidth]{pic/documentation.png}
+\end{figure}
 \end{frame}
 
 \subsection{Syntax}
@@ -85,6 +104,40 @@ MATLAB does not require variable declaration. When MATLAB encounters a new varia
 \end{itemize}
 \end{frame}
 
+\begin{frame}{Data Types}
+Variables has data types. Data type defines how your variable will store in computer. Basic data type you will use: 
+\begin{itemize}
+\item Integer (int8, int16, int32, int64)
+\item Unsigned Integer (uint8, uint16, uint32, uint64)
+\item Floating-point number (single, double)
+\item Logical
+\item Character
+\end{itemize}
+Default data type for any number variable is double.
+\end{frame}
+
+\begin{frame}{Data Types}
+\begin{block}{Data type conversion:}
+\begin{itemize}
+\item new variable = data type (old variable)
+\item for example: a = int8 (a)
+\end{itemize}
+Note: some information may be lost.
+\end{block}
+What will happen if we convert number to character?
+\begin{itemize}
+\item The ASCII code will be used!
+\item The ASCII code build a bridge between character and integer.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{ASCII Code}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{pic/ascii.jpeg}
+\end{figure}
+\end{frame}
+
 \begin{frame}{Matrix \& Vector \& Array}
 \begin{block}{Definition}
 Matrix: two-dimensional numeric arrays.\\
@@ -126,6 +179,18 @@ How to cut a sub matrix?
 \end{itemize}
 \end{frame}
 
+\begin{frame}{String \& Array}
+\begin{block}{String}
+When deal with words or sentences, MATLAB uses string. String is displayed in single quotation marks. String is not a new data type. It is a 1-D character matrix. Therefore, matrix operations all apply on strings.
+\end{block}
+Functions for string:
+\begin{itemize}
+\item strcmp, strrep, strfind
+\item str2num, num2str, str2double
+\end{itemize}
+Check MATLAB document for usage of these functions.
+\end{frame}
+
 \begin{frame}{Matrix \& Vector \& Array}
 \begin{block}{Aside: Matrix \& Parallel Computation\footnotemark}
 Why usually it's much faster to use matrix operation other than working with each element sequentially? This is mainly because of parallel computation. When a large problem can be divided into smaller tasks and they can be solved simutaneusly, it can save a lot of time. Matrix is excellent for parallel computation since the it can be divided into sub matrixes. Usually, matrix operation is 10 to 1000 times faster than iteration through elements.
@@ -137,7 +202,7 @@ Why usually it's much faster to use matrix operation other than working with eac
 \begin{block}{Aside: Array \& Data Structure}
 Array is the first and most basic data structure you will met. Data structure is a data organization, management and storage format that enables efficient access and modification.\footnotemark You can think of array as cabinet in our bathroom in D22/D21. Once you remember the number on the cabinet (for array, indices), you can quickly access the content in it. Array, regardless its dimension, is stored as a 1D sequence in memory. This enables convenient memory management and quick access. In latter courses, you will encounter more complicated data structures. 
 \end{block}
-\footnotemark{Reference: \url{https://en.wikipedia.org/wiki/Data_structure}}
+\footnotetext{Reference: \url{https://en.wikipedia.org/wiki/Data_structure}}
 \end{frame}
 
 
@@ -153,7 +218,7 @@ Array is the first and most basic data structure you will met. Data structure is
 \item ``pi''
 \end{itemize}
 
-\begin{block}{save \& load}
+\begin{block}{Save \& Load}
 \begin{itemize}
 \item save xxx: save all current variables into .mat file
 \item load xxx: load .mat file; will not clear variables already in workspace; will cover the variable in workspace if two variables share same name
@@ -163,13 +228,64 @@ Array is the first and most basic data structure you will met. Data structure is
 
 \begin{frame}{Command}
 \begin{itemize}
-\item ``exist'': test the existence of a varibale or a file (exist xxx)
+\item ``exist'': test the existence of a varible or a file (exist xxx)
 \item ``global'': declare global variable
 \item ``help'', ``doc'': show document (help xxx; doc xxx)
 \item ``clc'': clear command window
 \item ``clear / clear all'': clear workspace
 \end{itemize}
 It's good habit to add ``clc'' and ``clear'' at the first of your program, \textbf{especially in your homework}.
+\end{frame}
+
+\begin{frame}{M-file \&Script \&Function}
+Source code of MATLAB code is stored in .m files. It is essential text file, which means actually you can modify it as for .txt file. There are two kinds of .m file: script and function.
+\begin{block}{script}
+Scripts are essentially putting the code line by line to the command window. A script has no specific input and output. It operates on the value of workspace. Note that, if you do not clear the workspace before running a script, all variables in the workspace will be used by script, so of which are not intended, and may cause what you call ``XUANXUE'' (dark magic). \footnotemark
+\end{block}
+\begin{block}{function}
+Functions take specific input and produce output. A function only working on its own varivables, which you can take it as a separate box. It promotes \textbf{code reuse} and \textbf{decoupling}.
+\end{block}
+\footnotetext{So you see why I mention adding ``clear'' in the front of your code is a good habit.}
+\end{frame}
+
+\begin{frame}{M-file \&Script \&Function}
+\begin{block}{Function syntax}
+When defining:
+\begin{itemize}
+\item function [output1, output2 ...] = functionName (input1, input2 ...)
+\end{itemize}
+When calling (using):
+\begin{itemize}
+\item $[$output1, output2 ...$]$ = functionName (input1, input2 ...)
+\end{itemize}
+\end{block}
+Note when using function:
+\begin{itemize}
+\item You have to use same number of variables to accept the function output values or mistake will happen.
+\item For functions with only one output, if you directly called the function, the output value will be stored into $ans$.
+\item Function name should be the same as the m file name, or it cannot be called.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{M-file \& Script \&Function}
+\begin{block}{Aside: Code Reuse \& Decoupling\footnotemark}
+Code reuse not only means less code you need to produce; more importantly, it means less code you need to take care (debug, modify, or performance improvement). Decoupling means we would like the code be separated into modules, and limit the coupling only to the interfaces, i.e. where modules connect.
+\end{block}
+\begin{minipage}{0.48\textwidth}
+	\structure{Low coupling:}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.4\textwidth]{pic/low-coupling.jpg}
+	\end{figure}
+\end{minipage}
+\begin{minipage}{0.48\textwidth}
+	\structure{High coupling:}
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.4\textwidth]{pic/high-coupling.jpg}
+	\end{figure}
+\end{minipage}
+\footnotetext{Reference and thanks: some of content is from \url{https://github.com/tripack45/VE280-Notes}.}
 \end{frame}
 
 \begin{frame}{Control Flow}
@@ -243,39 +359,6 @@ Outputs: \\
 \end{minipage}
 \end{frame}
 
-\begin{frame}{M-file}
-Source code of MATLAB code is stored in .m files. It is essential text file, which means actually you can modify it as for .txt file. There are two kinds of .m file: script and function.
-\begin{block}{script}
-Scripts are essentially putting the code line by line to the command window. A script has no specific input and output. It operates on the value of workspace. Note that, if you do not clear the workspace before running a script, all variables in the workspace will be used by script, so of which are not intended, and may cause what you call ``XUANXUE'' (dark magic). \footnotemark
-\end{block}
-\begin{block}{function}
-Functions take specific input and produce output. A function only working on its own varivales, which you can take it as a separate box. It promotes \textbf{code reuse} and \textbf{decoupling}.
-\end{block}
-\footnotetext{So you see why I mention adding ``clear'' in the front of your code is a good habit.}
-\end{frame}
-
-\begin{frame}{M-file}
-
-\begin{block}{Aside: Code Reuse \& Decoupling\footnotemark}
-Code reuse not only means less code you need to produce; more importantly, it means less code you need to take care (debug, modify, or performance improvement). Decoupling means we would like the code be separated into modules, and limit the coupling only to the interfaces, i.e. where modules connect.
-\end{block}
-\begin{minipage}{0.48\textwidth}
-	\structure{Low coupling:}
-	\begin{figure}
-		\centering
-		\includegraphics[width=0.4\textwidth]{pic/low-coupling.jpg}
-	\end{figure}
-\end{minipage}
-\begin{minipage}{0.48\textwidth}
-	\structure{High coupling:}
-	\begin{figure}
-		\centering
-		\includegraphics[width=0.4\textwidth]{pic/high-coupling.jpg}
-	\end{figure}
-\end{minipage}
-\footnotetext{Reference and thanks: some of content is from \url{https://github.com/tripack45/VE280-Notes}.}
-\end{frame}
-
 \begin{frame}{Input \& Output}
 A = Input(``Please input: '');
 \begin{itemize}
@@ -307,8 +390,4 @@ fprintf \& sprintf
 \item sprintf: print format message into a string
 \item fprintf = disp(sprintf)
 \end{itemize}
-\end{frame}
-
-\begin{frame}{Function}
-
 \end{frame}
