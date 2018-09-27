@@ -1,7 +1,28 @@
 \subsection{About MATLAB}
+\lstset{
+alsolanguage=MATLAB,   
+tabsize=4,
+  frame=shadowbox,
+  commentstyle=\color{red!50!green!50!blue!50},
+  rulesepcolor=\color{red!20!green!20!blue!20},
+  keywordstyle=\color{blue!90}\bfseries, 
+  showstringspaces=false,
+  stringstyle=\ttfamily, 
+  keepspaces=true, 
+  breakindent=22pt,
+  numbers=left, 
+  stepnumber=1,
+  numberstyle={\color[RGB]{100,192,192}} ,
+  numbersep=8pt,
+  showspaces=false, 
+  flexiblecolumns=true, 
+  breaklines=true, 
+  breakautoindent=true,
+  breakindent=4em
+}
 \begin{frame}{About MATLAB}
 \begin{itemize}
-\item Commercial and experience (Octave)
+\item Commercial and experience ($\Leftrightarrow$ Octave)
 \item Not for general purpose (no one will write an operating system using MATLAB)
 \item Excel at numerical calculations and plot
 \item Many useful toolboxes (though we will not cover these in this course, you will use some of them in advanced courses)
@@ -50,6 +71,7 @@ Breakpoint: Useful tool for debugging.
 Documentation: Instructions for using MATLAB
 \begin{itemize}
 \item usage: doc / doc name (name = function you want to look up)
+\item useful in the exam
 \end{itemize}
 \begin{figure}[htbp]
 \centering
@@ -66,8 +88,8 @@ Documentation: Instructions for using MATLAB
 \item ``\&\&'', ``$||$'': logical and / or
 \item ``\%'': comment. Will be ignored by MATLAB. Make the code easier to understand
 \item ``;'': suppress output. Please add it to every line that you do not expect output! Extra output may result in deduction
-\item ``$\uparrow$, $\downarrow$'': view history
-\item Tab: indent
+\item $\uparrow$, $\downarrow$: view history
+\item Tab: indent. Make your code more readable.
 \item ``clc'': clear command window
 \item ``clear / clear all'': clear workspace
 \end{itemize}
@@ -86,12 +108,13 @@ A good variable name should\footnotemark
 \item Self explain its function
 \begin{itemize}
 \item bad variable name:``a1'', ``a2, ``a3'', ``aa'', ``aaaa'', ``b'', ``c'', ``d''
-\item good variable name: ``counter'', ``input'', ``flag''
+\item good variable name: ``counter'', ``index'', ``flag''
 \end{itemize}
 \end{itemize}
 Iteration variables ``i'', ``j'', ``k''
 \begin{itemize}
 \item Short, everyone use them
+\item In MATLAB, sometimes may use ``ii'', ``jj'' instead since ``i'' and ``j'' also represent virtual number
 \end{itemize}
 \footnotetext{Not required by VG101 but a really good habit.}
 \end{frame}
@@ -152,6 +175,11 @@ What will happen if we convert number to character?
 \item The ASCII code will be used!
 \item The ASCII code build a bridge between character and integer.
 \end{itemize}
+Example:\\
+\ \ \ \ >> 'a' - 0\\
+\ \ \ \ >> 'z' - 'a'\\
+\ \ \ \ >> char('a' + 10)\\
+
 \end{frame}
 
 \begin{frame}{ASCII Code}
@@ -175,7 +203,7 @@ How to initialize matrix?
 MATLAB allows dynamic changes of array sizes. For example:
 \begin{itemize}
 \item A = [A; A]
-\item A = [0, A] + [A, 0] (What can this do?)
+\item A = [1]; A = [0, A] + [A, 0] (What can this do?)
 \item A = [1: n];\\
 	for i = 2 : n\\
 	\ \ \ \ A = [A, [i: n, 1: i - 1]];\\
@@ -206,7 +234,7 @@ How to cut a sub matrix?
 
 \begin{frame}{String}
 \begin{block}{String}
-When deal with words or sentences, MATLAB uses string. String is displayed in single quotation marks. String is not a new data type. It is a 1-D character matrix. Therefore, matrix operations all apply on strings.
+When deal with words or sentences, MATLAB uses string. String is displayed in single quotation marks. String is not a new data type. It is a 1-D character matrix. Therefore, matrix operations all apply on strings. \footnotemark
 \end{block}
 Functions for string:
 \begin{itemize}
@@ -214,6 +242,7 @@ Functions for string:
 \item str2num, num2str, str2double
 \end{itemize}
 Check MATLAB document for usage of these functions.
+\footnotetext{So the easiest way to concatenate two string is by [ ], e.g. >> ['hello', 'world']}
 \end{frame}
 
 \begin{frame}
@@ -227,12 +256,12 @@ Array is the first and most basic data structure you will met. Data structure is
 \begin{frame}{M-file: Script \&Function}
 Source code of MATLAB code is stored in .m files. It is essential text file, which means actually you can modify it as for .txt file. There are two kinds of .m file: script and function.
 \begin{block}{script}
-Scripts are essentially putting the code line by line to the command window. A script has no specific input and output. It operates on the value of workspace. Note that, if you do not clear the workspace before running a script, all variables in the workspace will be used by script, so of which are not intended, and may cause what you call ``XUANXUE'' (dark magic). \footnotemark
+Scripts are essentially putting the code line by line to the command window. A script has no specific input and output. It operates on the value of workspace. Note that, if you do not clear the workspace before running a script, all variables in the workspace will be used by script, so of which are not intended, and may cause what you call ``XUANXUE.'' \footnotemark
 \end{block}
 \begin{block}{function}
 Functions take specific input and produce output. A function only working on its own varivables, which you can take it as a separate box. It promotes \textbf{code reuse} and \textbf{decoupling}.
 \end{block}
-\footnotetext{So you see why I mention adding ``clear'' in the front of your code is a good habit.}
+\footnotetext{So you see why we mention adding ``clear'' in the front of your code is a good habit.}
 \end{frame}
 
 \begin{frame}{M-file: Script \&Function}
@@ -249,8 +278,8 @@ When calling (using):
 Note when using function:
 \begin{itemize}
 \item You should use same number of variables to accept the function output values, or the output with no variables to accept will be discarded.
-\item If you don't specify the variable to accept the function output, MATLAB will create variable "ans" automatically, which is equivalient a single variable to accept function output.
-\item Function name should be the same as the m file name. MATLAB will search file name to call the function.
+\item If you don't specify the variable to accept the function output, MATLAB will create variable ``ans'' automatically, which is equivalient a single variable to accept function output.
+\item Function name should be the same as the .m file name. MATLAB will search file name to call the function.
 \end{itemize}
 \end{frame}
 
@@ -349,32 +378,35 @@ Outputs: \\
 \begin{frame}{Input \& Output}
 A = Input(``Please input: '');
 \begin{itemize}
-\item Most widely used for command window input.
-\item Can be used to input anything you want, including matrix.
+	\item Most widely used for command window input.
+	\item Can be used to input anything you want, including matrix.
 \end{itemize}
 Other ways of Input: 
 \begin{itemize}
-\item fscanf: Used for file input, will be discussed later.
-\item sscanf: Used for string input, not used currently.
+	\item fscanf: Used for file input, will be discussed later.
+	\item sscanf: Used for string input, not used currently.
 \end{itemize}
-For more information, you can refer to the help function.
+For more information, you can refer to the help command.
 \end{frame}
 
 \begin{frame}{Input \& Output}
-Not adding ``;'' outputs the value of an expression.
+Missing ``;'' will output the value of current line expression .
 \begin{itemize}
-\item Not recommended. You will receive deduction if you output redundant messages in homework by not adding ``;''.
+	\item Not recommended unless specified. You will receive deduction if you output redundant messages in homework by not adding ``;''.
 \end{itemize}
-disp(A);
-\begin{itemize}
-\item display the value of A with a new line
-\item can display anything you want (number, string, matrix, etc.)
-\end{itemize}
-fprintf \& sprintf
-\begin{itemize}
-\item Both use format symbols
-\item fprintf: print format message on command window/into file
-\item sprintf: print format message into a string
-\item fprintf = disp(sprintf)
-\end{itemize}
+\begin{block}{disp()}
+	\begin{itemize}
+		\item display the value of the variable with a new line
+		\item can display anything you want (number, string, matrix, etc.)
+		\item don't care the output format
+	\end{itemize}
+\end{block}
+\begin{block}{fprintf() \& sprintf()}
+	\begin{itemize}
+		\item Both make a formatted string
+		\item fprintf: make a formatted string and print it to the file/screen
+		\item sprintf: make a formatted string and store it into a string
+		\item fprintf('hello') $\Leftrightarrow$ disp(sprintf(['hello','\textbackslash n']))
+	\end{itemize}
+\end{block}
 \end{frame}
