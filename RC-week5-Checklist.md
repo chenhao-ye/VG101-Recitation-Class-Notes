@@ -10,7 +10,7 @@ b = [];
 b(1:3) = [3,4,5]; % it actually works, but don't use it
 ```
 
-### What should I do when my code doesn’t work?
+### What should I do when my code doesn't work?
 - Pray. The God will help me to make it work.
 - Stare at the code. It will fear me and fix itself.
 - Send an email to TA saying that "Oh TA, my code doesn't work."
@@ -118,9 +118,9 @@ Numeric Field：
 | :------------------: | ------- |
 | %d | Base 10 |
 | %i | (Too complicated. Please refer to the document page) |
-| %ld or %li | 64-bit values, base 10, 8, or 16 | 
+| %ld or %li | 64-bit values, base 10, 8, or 16 |
 | %u | Base 10 |
-| %o | Base 8 (octal) | 
+| %o | Base 8 (octal) |
 | %x | Base 16 (hexadecimal) |
 | %lu, %lo, %lx | 64-bit values, base 10, 8, or 16 |
 | %f, %e, %g | Floating-point fields can contain any of the following (not case sensitive): Inf, -Inf, NaN, or -NaN. |
