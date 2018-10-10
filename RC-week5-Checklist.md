@@ -19,12 +19,12 @@ b(1:3) = [3,4,5]; % it actually works, but don't use it
 - Use debugger (breakpoint).
 
 ### Monte Carlo Method & Random Number
-- Monte Carlo Method: the idea
+- Monte Carlo Method
 - Random number
 (Pseudorandom)
 
 ```matlab
-rand('state',0);
+rand('state',0); % set random seed
 rand(3)
 % Result:
 %   [0.9501    0.4860    0.4565
@@ -33,10 +33,8 @@ rand(3)
 ```
 
 - Generate random number: `rand()`,`randn()`,`randi()`
-- Set random state as
-current time: `rand('state', datenum(clock))`
-- Scaling random number: how to
-use `rand()` to generate random integer?
+- Set random state as current time: `rand('state', datenum(clock))`
+- Scaling random number: how to use `rand()` to generate random integer?
 
 ```matlab
 % Generate random integer in [0, 100]
@@ -87,7 +85,7 @@ isspace('  Find spa ces ')
 	- Field Width: Minimum number of characters to print. The field width operator can be a number, or an asterisk (\*) to refer to an input argument.
 	- Precision: 
 		- For `%f`, `%e`, or `%E` : Number of digits to the right of the decimal point. Example: `'%.4f'` prints pi as `'3.1416'`
-		- For `%g` or `%G` : Number of significant digits. Example: `'%.4g'` prints pi as `'3.142'`
+		- For `%g` or `%G` : Number of significant digits. Example: `'%.4g'` prints `pi` as `'3.142'`
 	- Conversion Character
 
 | Conversion | Details |
@@ -203,7 +201,7 @@ fclose(fid);
 ```
 
 - `fgetl(fid)`: read lines
-- `feof(fid)`
+- `feof(fid)`: true if reach end-of-file
 
 ```matlab
 % In fgetl_demo.m:
@@ -237,7 +235,6 @@ fclose(fid);
 - If length known, use matrix manipulation to slice
 - Use space to separate words
 - Be careful with `\n` (stored or discarded by the reading function)
-- Do type transfer if necessary
 - Sometimes, read the content and manipute in a matrix can be easier than manipute in file
 
 ### Plot Functions
@@ -257,8 +254,7 @@ ylabel('y');
 - LineSpec (See lecture 6 pages 35)
 - Multiple lines in one graph: `hold on`
 - Plot multiple graphs: `subplot`
-- 3D plot: `plot3`, `meshgrid`, `contour`,
-`mesh`, `surf`
+- 3D plot: `plot3`, `meshgrid`, `contour`,`mesh`, `surf`
 - Almost all of these can be done by mouse
 
 ```matlab
@@ -271,7 +267,7 @@ surf(x,y,z);
 ```
 
 ### Images
-- Store as array (uint8)
+- Read as array (**uint8**)
 - RGB channels
 - Load image: `img = imread(filename)`
 - Show image: `imshow(C)`, `image(C)`
@@ -303,9 +299,8 @@ xxx(Date) has highest price: xxx.
 xxx(Date) has lowest price: xxx.
 ```
 
-- A drunk person start at
-(0,0), each second he randomly choose a direction and move forward one unit
-distance. Simulate his behavior in 100 seconds and use `plot` to show his
-trajectory.
+- A drunk person walks in a square. He starts at (0,0). Each second he randomly choose a direction and move forward one unit distance. Simulate his behavior in 100 seconds and use `plot` to show his trajectory.
+- Another drunk person walks on a path (1D). He starts at x=0. Each second he randomly choose go positive direction or negative direction. Plot the probability distribution of his position after 100 seconds.
+
 - Generate an 256\*256 image as below
-![](./pic/exercise3.png)
+  ![](./pic/exercise3.png)
