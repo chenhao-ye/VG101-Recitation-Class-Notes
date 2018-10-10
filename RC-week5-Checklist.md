@@ -192,6 +192,71 @@ fclose(fid);
 - Mac OS X, Linux: `\n`
 - When in MATLAB, it will be decided by MATLAB setting, so `\n` should be fine
 
+### Monte Carlo Method & Random Number
+- Monte Carlo Method: the idea
+- Random number
+(Pseudorandom)
+
+```{.python .input .matlab}
+rand('state',0);
+rand(3)
+% Result:
+%   [0.9501    0.4860    0.4565
+%    0.2311    0.8913    0.0185
+%    0.6068    0.7621    0.8214]
+```
+
+- Generate random number: `rand()`,`randn()`,`randi()`
+- Set random state as
+current time: `rand(‘state’, datenum(clock))`
+- Scaling random number: how to
+use `rand()` to generate random integer?
+
+```{.python .input .matlab}
+% Generate random integer in [0, 100]
+x = floor(rand() * 101) % why 101?
+```
+
+### Plot Functions
+- Special window: `figure`
+- `plot()`
+
+```{.python .input .matlab}
+% Plot y = sin(x) function
+x = 0: 0.01: 10;
+y = sin(x);
+plot(x, y, 'ro');
+title('y=sin(x)');
+xlabel('x');
+ylabel('y');
+```
+
+- LineSpec (See lecture 6 ppt 35)
+- Multiple lines in one graph: `hold on`
+-
+Plot multiple graphs: `subplot`
+- 3D plot: `plot3`, `meshgrid`, `contour`,
+`mesh`, `surf`
+
+```{.python .input .matlab}
+% 3D plot
+[x,y]=meshgrid(-4:0.1:4);
+z=(x.^2-y.^2).*exp(-(x.^2+y.^2));
+contour(x,y,z);
+mesh(x,y,z);
+surf(x,y,z);
+```
+
+### Images
+- Store as array (uint8)
+- RGB channels
+- Load image: `img =
+imread(filename)`
+- Show image: `imshow(C)`, `image(C)`
+- Write to image file
+`imwrite(C, filename)`
+- Colormap
+
 
 ## What should I do when my code doesn’t work?
 - Pray. The God will help me to make it work.
@@ -200,3 +265,12 @@ fclose(fid);
 - Look through the code to find what is wrong.
 - Rubber Duck Debugging.
 - Use debugger (breakpoint).
+
+## Exercise (Prepare for your midterm)
+- Write a script finding all prime numbers below 1000.
+- A drunk person start at
+(0,0), each second he randomly choose a direction and move forward one unit
+distance. Simulate his behavior in 100 seconds and use `plot` to show his
+trajectory.
+- Generate an $256\times256$ image as below
+![](./pic/exercise3.png)
