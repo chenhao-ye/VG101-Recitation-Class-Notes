@@ -1,19 +1,62 @@
+# VG101: Introduction to Computer and Programming
 ## Week5 Checklist
 ### Tips for HW/Lab
 - Indent your code and name your variables properly! It can save you from shot by your future colleague.
 - **Test your code!** Don't leave it there after finishing coding and hope it works.
+- Do follow function prototype (just copy it from PDF)!
 - When accessing elements in a matrix, make sure the index is valid.
 ```matlab
 b = [];
 b(1:3) = [3,4,5]; % it actually works, but don't use it
 ```
 
+### What should I do when my code doesn’t work?
+- Pray. The God will help me to make it work.
+- Stare at the code. It will fear me and fix itself.
+- Send an email to TA saying that "Oh TA, my code doesn't work."
+- Look through the code with naked eyes to find what is wrong.
+- Rubber Duck Debugging.
+- Use debugger (breakpoint).
+
+### Monte Carlo Method & Random Number
+- Monte Carlo Method: the idea
+- Random number
+(Pseudorandom)
+
+```matlab
+rand('state',0);
+rand(3)
+% Result:
+%   [0.9501    0.4860    0.4565
+%    0.2311    0.8913    0.0185
+%    0.6068    0.7621    0.8214]
+```
+
+- Generate random number: `rand()`,`randn()`,`randi()`
+- Set random state as
+current time: `rand('state', datenum(clock))`
+- Scaling random number: how to
+use `rand()` to generate random integer?
+
+```matlab
+% Generate random integer in [0, 100]
+x = floor(rand() * 101) % why 101?
+```
 
 ### String
-
-
-
-
+- string is a 1-D matrix of chars
+- `strcmp(s1, s2)`: compare two strings
+- `strncmp(s1, s2, n)`: compare first n characters
+- `strcmpi, strncmpi`: compare ignoring case
+- `isletter('A') == 1`: true for letters
+- `isspace(' ') == 1`: true for space
+```matlab
+isspace('  Find spa ces ')
+% ans = [1 1 0 0 0 0 1 0 0 0 1 0 0 0 1]
+```
+- `strrep('This is a good example', 'good', 'great')`
+- `strfind('This is a good example', 'good') == 11`: the starting indices of substring
+- `num2str`, `str2num`, `str2double`
 
 ### File I/O
 - what is file?
@@ -184,44 +227,24 @@ fclose(fid);
 % 10:fclose(fid);
 ```
 
-
-### Use file I/O and string manipulation to extract information from a file
-
 ### Newline
 - Windows: `\r\n`
 - Mac OS X, Linux: `\n`
 - When in MATLAB, it will be decided by MATLAB setting, so `\n` should be fine
 
-### Monte Carlo Method & Random Number
-- Monte Carlo Method: the idea
-- Random number
-(Pseudorandom)
-
-```{.python .input .matlab}
-rand('state',0);
-rand(3)
-% Result:
-%   [0.9501    0.4860    0.4565
-%    0.2311    0.8913    0.0185
-%    0.6068    0.7621    0.8214]
-```
-
-- Generate random number: `rand()`,`randn()`,`randi()`
-- Set random state as
-current time: `rand(‘state’, datenum(clock))`
-- Scaling random number: how to
-use `rand()` to generate random integer?
-
-```{.python .input .matlab}
-% Generate random integer in [0, 100]
-x = floor(rand() * 101) % why 101?
-```
+### Use file I/O and string manipulation to extract information from a file
+- If the format known, read as format
+- If length known, use matrix manipulation to slice
+- Use space to separate words
+- Be careful with `\n` (stored or discarded by the reading function)
+- Do type transfer if necessary
+- Sometimes, read the content and manipute in a matrix can be easier than manipute in file
 
 ### Plot Functions
 - Special window: `figure`
 - `plot()`
 
-```{.python .input .matlab}
+```matlab
 % Plot y = sin(x) function
 x = 0: 0.01: 10;
 y = sin(x);
@@ -231,14 +254,14 @@ xlabel('x');
 ylabel('y');
 ```
 
-- LineSpec (See lecture 6 ppt 35)
+- LineSpec (See lecture 6 pages 35)
 - Multiple lines in one graph: `hold on`
--
-Plot multiple graphs: `subplot`
+- Plot multiple graphs: `subplot`
 - 3D plot: `plot3`, `meshgrid`, `contour`,
 `mesh`, `surf`
+- Almost all of these can be done by mouse
 
-```{.python .input .matlab}
+```matlab
 % 3D plot
 [x,y]=meshgrid(-4:0.1:4);
 z=(x.^2-y.^2).*exp(-(x.^2+y.^2));
@@ -250,27 +273,39 @@ surf(x,y,z);
 ### Images
 - Store as array (uint8)
 - RGB channels
-- Load image: `img =
-imread(filename)`
+- Load image: `img = imread(filename)`
 - Show image: `imshow(C)`, `image(C)`
-- Write to image file
-`imwrite(C, filename)`
-- Colormap
+- Write to image file `imwrite(C, filename)`
+- Colormap: used to color black-white images, used in plot
 
-
-## What should I do when my code doesn’t work?
-- Pray. The God will help me to make it work.
-- Stare at the code. It will fear me and fix itself.
-- Send an email to TA saying that “Oh TA, my code doesn’t work.”
-- Look through the code to find what is wrong.
-- Rubber Duck Debugging.
-- Use debugger (breakpoint).
-
-## Exercise (Prepare for your midterm)
+### Exercise (Prepare for Your Midterm Exam)
 - Write a script finding all prime numbers below 1000.
+- Given text file as below:
+```
+Date  Price
+Oct19 21.5
+Oct20 21.9
+Oct21 23.5
+Oct22 23.0
+Oct23 24.4
+Oct24 23.5
+Oct25 23.3
+Oct26 22.8
+Oct27 23.3
+Oct28 24.5
+Oct29 23.4
+```
+Read the file above, and calculate mean, variance, highest price, lowest price and outputs to `Analysis.txt` as format: 
+```
+The mean of prices is xxx.
+The variance of prices is xxx.
+xxx(Date) has highest price: xxx.
+xxx(Date) has lowest price: xxx.
+```
+
 - A drunk person start at
 (0,0), each second he randomly choose a direction and move forward one unit
 distance. Simulate his behavior in 100 seconds and use `plot` to show his
 trajectory.
-- Generate an $256\times256$ image as below
+- Generate an 256\*256 image as below
 ![](./pic/exercise3.png)
