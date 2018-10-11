@@ -274,6 +274,22 @@ surf(x,y,z);
 - Write to image file `imwrite(C, filename)`
 - Colormap: used to color black-white images, used in plot
 
+### More on Matrix Manipulations
+- `linspace`
+```matlab
+linspace(0, 20, 6) % a list within [0 20], 6 elements in total
+% C = [0 4 8 12 16 20]
+```
+- `length`, `size`
+- `max`, `min`
+- `sum`, `mean`, `std`, `var`
+- `round`, `ceil`, `floor`, `fix`
+- `find`
+```matlab
+a = rand(1,5);
+find(a == max(a));
+```
+
 ### Exercise (Prepare for Your Midterm Exam)
 - Write a script finding all prime numbers below 1000.
 - Given text file as below:
