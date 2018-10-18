@@ -69,3 +69,8 @@ end
 sorted_array = [qsort(sorted_array(1: left - 1)), pivot, qsort(sorted_array(right + 1: len))];
 end
 ```
+
+### Greeting from C: Hello World!
+- IDE
+    - `Visual Studio`: `Windows` only; community version is free
+    - `Clion`: available for `Windows`, `macOS`, `Linux`; use .edu email to register and get academic version for free
