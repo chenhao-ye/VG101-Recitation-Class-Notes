@@ -1,6 +1,41 @@
 # VG101: Introduction to Computer and Programming
 ## Week7 Checklist
-### Farewell MATLAB, Hello C
+
+### A short introduction about Linux
+#### History
+- DOS vs. Unix
+	- DOS -> MS-DOS -> Windows
+	- Unix: MINIX, Linux, macOS
+- CLI (Command Line Interface) vs. GUI (Graphical User Interface)
+
+#### Some useful command in command line (Bash)
+- `.`
+- `..`
+- `cd`: `cd pathname`: change directory
+- `ls`: `ls directory`: list files & folders under a directory
+- `mkdir`: `mkdir dir`: make directory
+- `rmdir`: `rmdir dif`: remove directory
+- `rm`: `rm file`: remove file
+- `cat`: `cat file`: concatenate files
+- `diff`: `diff file1 file2`: compare the difference of two files
+- `pwd`: print working directory
+- `man`: open manual page
+- `apt-get install xxx` (for Ubuntu) or `brew install xxx` (for macOS)
+- `./executable_filename`
+
+#### Compiling in command line
+- What does "compile" mean?
+- Compiler
+	- `gcc`
+	- `clang`
+- Command: 
+	- `gcc -o executable_filename source_code_filename.c`
+	- May add some options for compiling
+- Example
+	- Compiling command on JOJ: `gcc -O2 -Wall -Wextra -Werror -pedantic -Wno-unused-result -std=c11 -lm -o /out/helloworld /in/helloworld.c`
+- Text + Command Line Compiling vs. IDE
+
+### Overview C
 #### C
 - A Lower-level higher-level language.
 - A procedure-oriented programming language.
@@ -12,25 +47,15 @@
 - C++ integrates many modern programming ideas.
 
 ### Before we start
-- Be prepare to get rid of bad programming habits.
+- Be prepared to get rid of bad programming habits.
 - Submitting program on JOJ that result to an error = Submitting nothing.
-- Warning = Error on JOJ.
-- Start early. JOJ has maximum submission limits per day.
-- [Visual Studio guide](https://www.cnblogs.com/shawnxie/p/7887787.html)
+- Warning == Error on JOJ.
+- Start early.
 
 ### Features of C
-What is C different with MATLAB?
-- Filename: end with .c
-- Include header files (libraries)
-- A main function with return value
-- ; at the end of each line
-- "{}" instead of "end"
-- Different comment style
-
 ```C
 /* Filename: helloWorld.c */
 #include <stdio.h>
-
 int main()
 {
     printf("Hello world!\n");
@@ -38,16 +63,28 @@ int main()
 }
 ```
 
-#### Header files
-- What is program files (.c) and header files (.h)? 
-- Definition vs. Implementation.
-- include: link multiple files.
-```C
-#include <stdio.h>
-#include <math.h>
-#include "myFunctions.h"
+- Filename: end with `.c`
+- Include header files (libraries)
+- A main function **with an int return value**
+- `;` at the end of each line
+- `{}` as block
+- Different comment style
+	- inline comment
+```c
+// comment in line
 ```
-- Library: function definitions written by frofessional programers.
+	- block comment
+```C
+/* 
+\(0.0)/
+comment as a block
+\(=.0)-
+*/
+```
+
+#### Header files
+- What is source files (.c) and header files (.h)? 
+- Library: functions written by professional programers.
 - Common libraries: 
 ```C
 #include <stdio.h>   // For standard input and output.
@@ -56,14 +93,23 @@ int main()
 #include <string.h>  // For efficient string manipulation.
 #include <time.h>    // For recording program running time.
 ```
-- Header files: functions definitions witten by you.
-- Difference between <> and ""
+- Why we need to include library?
+- Function: Declaration vs. Definition.
+- Include: link multiple files (including library files).
+```C
+#include <stdio.h>
+#include <math.h>
+#include "myFunctions.h"
+```
+- Header files: functions declarations written by you.
+- Difference between `<>` and `""`
 
-#### Main function
-- Main function is where a program starts executing.
+
+#### `main` function
+- `main` function is where a program starts executing.
 - A program only contains **one** main function.
-- Main function not callable. (No recursion for main function)
-- Return type and return value: **strongly recommended**
+- `main` function is not callable for you. (No recursion for `main` function)
+- Return type and return value for `main` should be `int` and `0` (non-zero return value is to indicate some errors)
 ```C
 int main() // Return type: a integer
 {
@@ -72,79 +118,65 @@ int main() // Return type: a integer
 }
 ```
 - Your program will fail on JOJ if you don't add return type and return value.
-- **Please** don't write everything in the main function.
+- Please **don't** write everything in the main function.
 
 ### Variable
 - A variable need a name, a data type, a value
 - Variable name rules similar to MATLAB
-- Requires define before use
+- Requires **declaration before use**
+	- Why variable declaration is needed?
 ```C
-int main() // Define different types of variables
-{
-	int a;
-	float b;
-	unsigned int c;
-	char d;
-	long e;
-	return 0;
-}
+int a;
+float b;
+unsigned int c;
+char d;
+long e;
 ```
 
 #### Data types
 - char: 8 bits ASCII code representing a character
-- int: -2147483648 ~ 2147483647 
+- int: not guaranteed how many bytes, commonly 4 bytes  (32 bits)
 - unsigned int
 - long 
 - float & double (both floating point)
 - No bool type (logical type) in C. Number 0 = False. Number not 0 = True.
 
 #### Data type conversion
-- C will automatically convert data type.
+- C will automatically convert data type if necessary.
 ```C
-int main()
-{
-	int a = 1 + 1.5;      // What is a?
-	double b = 3/2;       // What is b?
-	double c = 3/2.0;     // What is c?
-	int d = a + b + c;    // What is d?
-	return 0;
-}
+int a = 1 + 1.5;      // What is a?
+double b = 3 / 2;       // What is b?
+double c = 3 / 2.0;     // What is c?
+int d = a + b + c;    // What is d?
+char e = 'a';
+e = e + 1;
 ```
 - You can manually convert data type.
 ```C
-int main()
-{
-	double pi = 3.1415926;
-	int integerPi = (int)pi; // Convert double into int
-	return 0;
-}
+double pi = 3.1415926;
+int integerPi = (int)pi; // Convert double into int
 ```
-- Keep using same data type in an expression to avoid trouble.
+- Tips: some automatical type conversion may result in some information loss (e.g. long long -> int). It will generate warning, and in JOJ, every warning will be regarded as error :) So in this case, do it type conversion manually to tell the compiler that you indeed intend to do this conversion.
+- All the constant in C will be an `int` by default, and `double` for float point number
 
 #### Constant variable
-- Same as MATLAB, C allows constant variables.
 - Require initial value assigned, or the variable is meaningless.
 - Changing the value of constant variable causes error.
-- Why constant variable? 
-Sometimes we want to garantee we will not mistakely change variable that should remain constant.
+- Why constant variable? Sometimes we want to garantee we will not mistakely change variable that should remain constant. In future learning, you will see many usage of `const` and find it is more like a promise that "I will not change this value."
 ```C
-int main()
-{
-	const int a = 1; // Constant variable must has initial value assigned
-	a = 2;           // Wrong! Causing an error.
-	return 0;
-}
+const int a = 1; // Constant variable must has initial value assigned
+a = 2;           // Error!
 ```
 
 ### Input / Output
-- You must include <stdio.h>.
-- Output function: printf
-- Input function: scanf
+- You must include `<stdio.h>`.
+- Output function: `printf`
+- Input function: `scanf`
 
-#### printf
-- Similar to MATLAB function fprintf.
-- Only print to standard output stream (command line).
-- Use C function fprintf for file output.
+#### `printf`
+- Similar to MATLAB function `fprintf`.
+- Only print to standard output stream (`stdout`).
+- Use C function `fprintf` for file output.
 ```C
 #include <stdio.h>
 int main()
@@ -156,11 +188,11 @@ int main()
 }
 ```
 
-#### scanf
-- Similar to MATLAB function fscanf.
-- Only scan from standard inpt stream (command line input).
+#### `scanf`
+- Similar to MATLAB function `fscanf`.
+- Only scan from standard input stream (`stdin`).
 - Use C function fscanf for file input.
-- Visual studio may require you use scanf_s
+- Visual studio may require you use `scanf_s` but it is not a standard library function. It will fail compiling on JOJ.
 ```C
 #include <stdio.h>
 int main()
@@ -174,33 +206,37 @@ int main()
 }
 ```
 
-#### other ways of I/O
-- getchar(): seldom used.
-- Some Visual studio user use getchar() to avoid quit after program terminates. Don't do that! Program like this 100% fail on JOJ. Follow above visual studio guide to setup, or [follow this link to fix](https://jingyan.baidu.com/article/cdddd41c8e2e4153cb00e13d.html).
-
 ### Operators
-- Assignment operator: =
-- Arithmatic: +, -, \*, /
-- Remainder: %
-- No ^ , use pow()
-
-#### ~~To be lazy~~
-- ++ increment, -- decrement
-- (i++) vs. (++i)
+- Assignment operator: `=`
 ```C
-#include <stdio.h>
-int main()
-{
-	int i=0;
-	printf("%d\n", i++); // Print out 0
-	return 0;
-}
+int a, b;
+a = (b = 1); // Never write anything like this unless you want to get shot by your college
+```
+- Arithmatic: `+`, `-`, `*`, `/`
+- Remainder: `%`
+- No `^` , use `pow()`
+
+#### Syntax sugar (to be lazy)
+- increment: `++`
+- decrement: `--`
+- `i++` vs. `++i`
+```C
+int i=0;
+printf("%d\n", i++); // Print out 0
+```
+```C
+int i;
+i = (i++) + (++i); // DO NOT write anything like this in real life
 ```
 - Shorthand assignment operators
 	- a += b &hArr; a = a + b
 	- a -= b &hArr; a = a - b
 	- a \*= b &hArr; a = a \* b
 	- a /= b &hArr; a = a / b
+- (condition) ? expression1 : expression2
+```C
+max = (x > y) ? x : y;
+```
 
 #### Logical operators
 | operator | operation |
@@ -211,8 +247,10 @@ int main()
 | == | Equal to|
 | != | Not equal to|
 
+- different with `&` and `|`
+
 ### Control statements
-- if, switch, while, for. Similar to MATLAB.
+- `if`, `switch`, `while`, `for`. Similar to MATLAB.
 - blocks {}: enclose multiple statesments
 - Variable scope: inside block.
 ```C
@@ -227,14 +265,14 @@ int main()
 	return 0;
 }
 ```
-- block {} can be omitted if it only enclose one statement.
+- block `{}` can be omitted if it only enclose one statement.
 - Again, **Indent is useful!**
 
-#### If
+#### `if`
 - No major difference with MATLAB
 - No elseif, use else if
 
-#### Switch
+#### `switch`
 - Fast way to deal with multiple situations.
 - break is important. What will happen without break?
 ```C
@@ -254,13 +292,13 @@ int main()
 }
 ```
 
-#### While
+#### `while`
 - No major difference with MATLAB
-- Do-while: another version of while loog.
-- while(1) for infinite loop.
-- break & continue: same as MATLAB
+- `Do-while`: another version of while loop.
+- `while(1)` for infinite loop.
+- `break` & `continue`: same as MATLAB
 
-#### For
+#### `for`
 - Most common loop statement
 - How to use?
 ```C
@@ -287,9 +325,15 @@ int main()
 	return 0;
 }
 ```
-- What is the variable scope if we do this?
+- What is the scope of variable `i` if we do this?
 ```C
 for (int i=0; i<10; i++)
+	DoSomething();
+```
+- A common mistake
+```C
+for (int i=0; i<10; i++);
+	DoSomething();
 ```
 
 
@@ -305,9 +349,9 @@ int add(int a, int b)   // returnType functionName (parameterType parameter, ...
 - parameter passed by value
 - same variable name can be used in different function (they do not share value)
 - Use void function if function return nothing.
-- Use void parameter if function needs no input parameters.
+- Use void parameter if function needs no input parameters. (can be omitted)
 ```C
-void helloWorld(void)			// No input parameter, no return value.
+void helloWorld(void)			// No input parameter, no return value. void helloWorld() is also okay
 {
 	printf("Hello world\n"); 	// Only do something.
 }
@@ -330,13 +374,17 @@ int main()
 }
 
 int add(int a, int b)			// Function implementation
-	return (a + b);				// block {} omitted since only single statement
+{
+	return (a + b);				// block {} should not be omitted for function even with only single statement
+}
 ```
 - Put prototype and implentation together:
 ```C
 #include <stdio.h>
 int add(int a, int b)			// Function prototype + implementation, ; not required
+{
 	return (a + b);
+}
 
 int main()
 {
@@ -347,12 +395,7 @@ int main()
 	return 0;
 }
 ```
-- Both is OK. ~~Just be lazy and use the latter.~~
+- Both are OK in this case.
 - Sometimes you have to use the former
-	- Using function in other .c files: prototype written in a .h file.
-	- Two functions calling each other. (recursion)
-
-
-
-
-
+	- Using function in other `.c` files, prototype written in a `.h` file.
+	- Two functions calling each other. 
