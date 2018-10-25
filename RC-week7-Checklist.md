@@ -65,16 +65,13 @@ int main()
 
 - Filename: end with `.c`
 - Include header files (libraries)
-- A main function **with an int return value**
+- A main function **with an int as the return value**
 - `;` at the end of each line
 - `{}` as block
-- Different comment style
-	- inline comment
+- Comment
 ```c
 // comment in line
-```
-	- block comment
-```C
+
 /* 
 \(0.0)/
 comment as a block
@@ -82,7 +79,11 @@ comment as a block
 */
 ```
 
+- Coding style
+- Undefined behavior
+
 #### Header files
+
 - What is source files (.c) and header files (.h)? 
 - Library: functions written by professional programers.
 - Common libraries: 
@@ -133,7 +134,17 @@ char d;
 long e;
 ```
 
+```c
+int a = 0; 			// Declaration with a value assigned
+int b, c; 			// Declaration without a value assigned 
+					// The value of "b" and "c" are "uninitialized"
+int d, e, f = 0; 	// Not recommanded
+```
+
+
+
 #### Data types
+
 - char: 8 bits ASCII code representing a character
 - int: not guaranteed how many bytes, commonly 4 bytes  (32 bits)
 - unsigned int
@@ -144,10 +155,10 @@ long e;
 #### Data type conversion
 - C will automatically convert data type if necessary.
 ```C
-int a = 1 + 1.5;      // What is a?
-double b = 3 / 2;       // What is b?
-double c = 3 / 2.0;     // What is c?
-int d = a + b + c;    // What is d?
+int a = 1 + 1.5;      	// What is the value of a?
+double b = 3 / 2;       // What is the value of b?
+double c = 3 / 2.0;     // What is the value of c?
+int d = a + b + c;    	// What is the value of d?
 char e = 'a';
 e = e + 1;
 ```
@@ -181,9 +192,13 @@ a = 2;           // Error!
 #include <stdio.h>
 int main()
 {
-	printf("Hello world!\n");                           // string uses double quotation mark
-	int a = 0; float b = 1; double c = 2; char d = 'd'; // char uses single quotation mark
-	printf("a=%d\tb=%f\tc=%lf\td=%c.\n", a, b, c, d);   // \t for tab, \n for new line
+	printf("Hello world!\n");       	// string uses double quotation mark
+	int a = 0; 
+    float b = 1; 
+    double c = 2; 
+    char d = 'd'; 						// char uses single quotation mark
+	printf("a=%d\tb=%f\tc=%lf\td=%c.\n", a, b, c, d);   
+    									// "\t" for tab, "\n" for new line
 	return 0;
 }
 ```
@@ -191,8 +206,8 @@ int main()
 #### `scanf`
 - Similar to MATLAB function `fscanf`.
 - Only scan from standard input stream (`stdin`).
-- Use C function fscanf for file input.
-- Visual studio may require you use `scanf_s` but it is not a standard library function. It will fail compiling on JOJ.
+- Use C function `fscanf` for file input.
+- Visual Studio may require you use `scanf_s` but it is not a standard library function. It will fail compiling on JOJ.
 ```C
 #include <stdio.h>
 int main()
@@ -210,11 +225,12 @@ int main()
 - Assignment operator: `=`
 ```C
 int a, b;
-a = (b = 1); // Never write anything like this unless you want to get shot by your college
+a = (b = 1); 	// Never write anything like this 
+				// unless you want to get shot by your college
 ```
 - Arithmatic: `+`, `-`, `*`, `/`
 - Remainder: `%`
-- No `^` , use `pow()`
+- No `^` for power, use `pow()` instead
 
 #### Syntax sugar (to be lazy)
 - increment: `++`
@@ -222,11 +238,11 @@ a = (b = 1); // Never write anything like this unless you want to get shot by yo
 - `i++` vs. `++i`
 ```C
 int i=0;
-printf("%d\n", i++); // Print out 0
+printf("%d\n", i++); 	// Print out 0
 ```
 ```C
 int i;
-i = (i++) + (++i); // DO NOT write anything like this in real life
+i = (i++) + (++i); 		// DO NOT write anything like this in real life
 ```
 - Shorthand assignment operators
 	- a += b &hArr; a = a + b
@@ -247,30 +263,30 @@ max = (x > y) ? x : y;
 | == | Equal to|
 | != | Not equal to|
 
-- different with `&` and `|`
+- different with `&` , `|`, `^`
 
 ### Control statements
 - `if`, `switch`, `while`, `for`. Similar to MATLAB.
-- blocks {}: enclose multiple statesments
-- Variable scope: inside block.
+- blocks `{}`: enclose multiple statesments
+- Variable scope: only valid inside block.
 ```C
 #include <stdio.h>
 int main()
 {
-	if (1) // An if statement they will always excute
+	if (1) 					// This "if" statement they will always excute
 	{
 		int a = 1;
 	}
-	printf("a = %d", a); // Wrong! variable a no longer exists!
+	printf("a = %d", a); 	// Wrong! variable a no longer exists!
 	return 0;
 }
 ```
 - block `{}` can be omitted if it only enclose one statement.
-- Again, **Indent is useful!**
+- Again, **Indent is important and useful!**
 
 #### `if`
 - No major difference with MATLAB
-- No elseif, use else if
+- No `elseif`, use `else if`
 
 #### `switch`
 - Fast way to deal with multiple situations.
@@ -284,7 +300,7 @@ int main()
 	scanf("%d", &n);
 	switch (n)
 	{
-		case 1: printf("Ace\n"); break; // break is important
+		case 1: printf("Ace\n"); break; 		// break is important
 		case 11: printf("Jack\n"); break;
 		default: printf("%d\n", n); break;
 	}
@@ -306,7 +322,7 @@ int main()
 int main()
 {
 	int i;
-	for (i=0; i<10; i++) //Initial value; ending condition; step
+	for (i=0; i<10; i++) 		//Initial value; ending condition; step
 		printf("%d\n", i);
 	return 0;
 }
@@ -325,10 +341,13 @@ int main()
 	return 0;
 }
 ```
-- What is the scope of variable `i` if we do this?
+- What are the scopes of variable `i` and `j` if we do this?
 ```C
 for (int i=0; i<10; i++)
 	DoSomething();
+int j;
+for (j=0; j<10; j++)
+    DoSomething();
 ```
 - A common mistake
 ```C
@@ -338,7 +357,7 @@ for (int i=0; i<10; i++);
 
 
 ### Function
-- Allow code written outside main function
+- Allow code written outside `main` function
 - Syntax:
 ```C
 int add(int a, int b)   // returnType functionName (parameterType parameter, ...)
@@ -346,8 +365,9 @@ int add(int a, int b)   // returnType functionName (parameterType parameter, ...
 	return (a + b);		// return value (must consistent with returnType)
 }
 ```
-- parameter passed by value
-- same variable name can be used in different function (they do not share value)
+- Parameter passed by value
+- Same variable name can be used in different function (they do not share value)
+- If the inside variable share the same name with the outside variable, it will block the outside one
 - Use void function if function return nothing.
 - Use void parameter if function needs no input parameters. (can be omitted)
 ```C
@@ -358,11 +378,11 @@ void helloWorld(void)			// No input parameter, no return value. void helloWorld(
 ```
 
 #### Use function in main
-- Function prototype (definition) should appear above where it is used.
-- Function implementation can appear after main function.
+- Function declaration should appear above where it is used.
+- Function definition can appear after main function.
 ```C
 #include <stdio.h>
-int add(int a, int b);			// Function prototype, ; required
+int add(int a, int b);			// Function declaration, ; required
 
 int main()
 {
@@ -373,15 +393,16 @@ int main()
 	return 0;
 }
 
-int add(int a, int b)			// Function implementation
+int add(int a, int b)			// Function definition (implementation)
 {
-	return (a + b);				// block {} should not be omitted for function even with only single statement
+	return (a + b);				// block {} cannot be omitted for function
+    							// even with only single statement
 }
 ```
-- Put prototype and implentation together:
+- Put declaration and definition together:
 ```C
 #include <stdio.h>
-int add(int a, int b)			// Function prototype + implementation, ; not required
+int add(int a, int b)			// Function declaration + definition, ";" not required
 {
 	return (a + b);
 }
@@ -390,12 +411,13 @@ int main()
 {
 	int a, b, c;
 	scanf("%d, %d", &a, &b);
-	c = add(a, b);				// Call the function, return value stored into c
+	c = add(a, b);				// Call the function
+    							// return value stored into variable "c"
 	printf("a+b=%d\n", c);
 	return 0;
 }
 ```
 - Both are OK in this case.
 - Sometimes you have to use the former
-	- Using function in other `.c` files, prototype written in a `.h` file.
+	- Using function in other `.c` files, definition written in a `.h` file.
 	- Two functions calling each other. 
