@@ -377,9 +377,9 @@ void helloWorld(void)			// No input parameter, no return value. void helloWorld(
 }
 ```
 
-#### Use function in main
+#### Call function in `main`
 - Function declaration should appear above where it is used.
-- Function definition can appear after main function.
+- Function definition can appear after `main` function.
 ```C
 #include <stdio.h>
 int add(int a, int b);			// Function declaration, ; required
