@@ -32,7 +32,7 @@
 	- `gcc -o executable_filename source_code_filename.c`
 	- May add some options for compiling
 - Example
-	- Compiling command on JOJ: `gcc -O2 -Wall -Wextra -Werror -pedantic -Wno-unused-result -std=c11 -lm -o /out/helloworld /in/helloworld.c`
+	- Compiling command on JOJ: `gcc -O2 -Wall -Wextra -Werror -pedantic -Wno-unused-result -std=c11 -o /out/helloworld /in/helloworld.c -lm`
 - Text + Command Line Compiling vs. IDE
 
 ### Overview C
