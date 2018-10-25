@@ -141,8 +141,6 @@ int b, c; 			// Declaration without a value assigned
 int d, e, f = 0; 	// Not recommanded
 ```
 
-
-
 #### Data types
 
 - char: 8 bits ASCII code representing a character
