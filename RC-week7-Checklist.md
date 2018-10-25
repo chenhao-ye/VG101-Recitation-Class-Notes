@@ -108,7 +108,7 @@ comment as a block
 
 #### `main` function
 - `main` function is where a program starts executing.
-- A program only contains **one** main function.
+- A program only contains **one** `main` function.
 - `main` function is not callable for you. (No recursion for `main` function)
 - Return type and return value for `main` should be `int` and `0` (non-zero return value is to indicate some errors)
 ```C
@@ -119,7 +119,7 @@ int main() // Return type: a integer
 }
 ```
 - Your program will fail on JOJ if you don't add return type and return value.
-- Please **don't** write everything in the main function.
+- Please **don't** write everything in the `main` function.
 
 ### Variable
 - A variable need a name, a data type, a value
