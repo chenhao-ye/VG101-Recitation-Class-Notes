@@ -64,11 +64,11 @@ double num[20];
 - Array in memory space (different type require different size of memory)
 - Ways of initialization
 ```C
-int zeros[20] = {0}; // All elements initialized as 0
-int notAllZero[20] = {1}; // Only the first one will be 1, other will be 0
+int zeros[20] = {0}; 					// All elements initialized as 0
+int notAllZero[20] = {1}; 				// Only the first one will be 1, other will be 0
 int numbers[5] = {1, 2, 3, 4, 5};
-int numbers[] = {1, 2, 3, 4, 5}; // Equivalent to previous
-char str[4] = {'a', 'b', 'c', '\0'}; // Define a string, '\0' is ASCII 0
+int numbers[] = {1, 2, 3, 4, 5}; 		// Equivalent to previous
+char str[4] = {'a', 'b', 'c', '\0'}; 	// Define a string, '\0' is ASCII 0
 int numbers[5];
 for (int i=0; i<5; i++)
 	numbers[i] = i+1;
@@ -76,10 +76,10 @@ for (int i=0; i<5; i++)
 - Do remember to initial your array (maybe set to 0)!
 - Wrong ways of initialization
 ```C
-int numbers_1[5] = {1, 2, 3, 4, 5, 6};// Error: length exceeds
+int numbers_1[5] = {1, 2, 3, 4, 5, 6};	// Error: length exceeds
 int numbers_2[5];
-numbers_2[5] = {1, 2, 3, 4, 5};	// Error: {} only valid when initialization
-numbers_2 = {1, 2, 3, 4, 5};	// Also Error
+numbers_2[5] = {1, 2, 3, 4, 5};			// Error: {} only valid when initialization
+numbers_2 = {1, 2, 3, 4, 5};			// Also Error
 ```
 - memory set: `void * memset ( void * ptr, int value, size_t num )` 
 	- `#include <string.h>`
@@ -273,15 +273,15 @@ int* pint_2 = &(array[0]);
 printf("%p\n", array);			// 0x7ffee0b4a7e0
 printf("%p\n", array + 1);		// 0x7ffee0b4a7e4
 ```
-- `[]` is essentially a dereference operator!
 ```C
 if (array[3] == *(array + 3))
 	printf("There are same!\n");
 ```
+- `[]` is essentially a dereference operator!
 	- Something evil but legal: `printf("%d", 3[array]);`
 	- Why index start with 0?
 	- Why we need to pass the length separately?
-	- Now you know why `scanf` requires a `&` for `char` but not for an `char` array: because it requires a pointer (an address to put the scanfed value)
+	- Now you know why `scanf` requires `&` for `char` but not for an `char` array: because it requires a pointer (an address to put the scanfed value)
 - In function call `void PrintIntegerArray(int array[], int length)` is equivalent to `void PrintIntegerArray(int* array, int length)`
 - A two dimension array is essentially an array of pointer: 
 ```C
@@ -304,6 +304,6 @@ int main()
 
 ```
 
-### Some Reference for `C`
+### Some Reference for C
 - https://en.cppreference.com
 - `man xxx` for C function
