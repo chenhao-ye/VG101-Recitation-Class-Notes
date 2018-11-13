@@ -59,7 +59,7 @@ char *pcity = "Dallas"; 	// Don't write anything like this
 
 > **DESCRIPTION**
 
-> The `fgets()` function reads at most one less than the number of characters specified by size from the given stream and stores them in the string str.  Reading stops when a newline character is found, at end-of-file or error.  The newline, if any, is retained. If any characters are read and there is no error, a `\0' character is appended to end the string.
+> The `fgets()` function reads at most one less than the number of characters specified by size from the given stream and stores them in the string str.  Reading stops when a newline character is found, at end-of-file or error.  The newline, if any, is retained. If any characters are read and there is no error, a `\0` character is appended to end the string.
 
 ```C
 char str[20] = {0};
@@ -155,10 +155,108 @@ printf("%s\n", str_1);		// Hello World!
 - How could we declare memory in heap rather than in stack? Use `malloc()` and `free()`
 - `#include <stdlib.h>`
 - `void * malloc(size_t size)`: it will allocate memory from heap (the size of memory is specified by the parameter `size`), and return the pointer to the first byte
-- `void free(void *ptr)`: it will free the memory pointed by `ptr` in the memory
+- `void free(void *ptr)`: it will free the memory pointed by `ptr` in the memory. Question: how the program knows how much memory to free?
+- Return `NULL` if fail to allocate memory.
+
+```C
+int *arr = (int *) malloc(10*sizeof(int));		// allocate an int[10]
+free(arr)										// free the memory
+```
 - What's the point to allocate memory and free memory manually?
+- You **must** free all the memory you allocate.
 - Memory leak
 - Use `clang` to check memory leak
+
+### File I/O
+- File pointer `FILE *`
+- `fopen` and `fclose`
+- Modes for `fopen`
+| Mode | Explanation |
+| :----------: | ------------- |
+| 'r' | Open file for reading. The file must exist. |
+| 'w' | Open or create new file for writing. Discard existing contents, if any. |
+| 'a' | Open or create new file for writing. Append data to the end of the file. |
+| 'r+' | Open file for reading and writing. The file must exist.|
+| 'w+' | Open or create new file for reading and writing. Discard existing contents, if any. You can only read what you write. |
+| 'a+' | Open or create new file for reading and writing. Append data to the end of the file. You can read what already exists.|
+```C
+#include <stdio.h>
+int main ()
+{
+	FILE * pFile;
+	int n;
+	char name [100];
+	pFile = fopen ("myfile.txt","w");
+	for (n=0 ; n<3 ; n++)
+	{
+		puts ("please, enter a name: ");
+		gets (name);
+		fprintf (pFile, "Name %d [%-10.10s]\n",n,name);
+	}
+	fclose (pFile);
+	return 0;
+}
+```
+- As always, you should close the file you open.
+### Structure
+- In C, you can assemble a package of variables into a structure.
+- Define your own datatype.
+- Two ways to define strctures (they are equivalent):
+```C
+struct Student
+{
+	char name[100];
+	int studentID[12];
+	int midtermScore;
+	int finalScore;
+};			// need ; at the end. Don't forget.
+			// Usually strcut name is Capitalized to differenciate with variable names
+```
+```C
+typedef struct
+{
+	char name[100];
+	int studentID[12];
+	int midtermScore;
+	int finalScore;
+}Student;   // also need ;
+```
+- Why structure? Make data easier to organize.
+- How to use structure after defining it? Treat it as a new variable type.
+```C
+struct Student
+{
+	char name[100];
+	int studentID[12];
+	int midtermScore;
+	int finalScore;
+};			// Usually written at the head of your program or in .h file
+
+int main()
+{
+	struct Student MrBean;
+	struct Student vg101[120];
+	struct Student * JI = (struct Student *) malloc(300*sizeof(struct Student));
+	free(JI);
+	return 0;
+}
+```
+- To initialize structure:
+- To access variable in structrue:
+```C
+struct Student MrBean = {		// the standard way of initialization
+    .name= "MrBean", 			// or you can initialize member data one by one by
+    .studentID={0}, 			// MrBean.name = "MrBean";
+    .midtermScore = 0, 			// MrBean.studentID = {0};
+    .finalScore = 0				// ...
+};
+struct Student *pt = &MrBean;
+printf("%s's midterm score = %d\n", MrBean.name, MrBean.midtermScore);	
+// use . to visit member data.
+printf("%s's final score = %d\n", pt->name, pt->finalScore);			
+// use -> if using pointer.
+```
+
 
 
 
