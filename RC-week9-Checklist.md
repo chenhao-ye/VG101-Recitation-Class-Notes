@@ -159,13 +159,15 @@ printf("%s\n", str_1);		// Hello World!
 - Return `NULL` if fail to allocate memory.
 
 ```C
-int *arr = (int *) malloc(10*sizeof(int));		// allocate an int[10]
+int *arr = (int *) malloc(10*sizeof(int));		// allocate an piece of memory 
+												// with the size of 10 ints
 free(arr)										// free the memory
 ```
+- Life cycles of allocated memory
 - What's the point to allocate memory and free memory manually?
-- You **must** free all the memory you allocate.
+- You **must** free all the memory you allocate
 - Memory leak
-- Use `clang` to check memory leak
+- Use `clang` sanitize to check memory leak
 
 ### File I/O
 - File pointer `FILE *`
@@ -201,7 +203,15 @@ int main ()
 ### Structure
 - In C, you can assemble a package of variables into a structure.
 - Define your own datatype.
+- `typedef`:use the syntax to declare an instance as the alias name for the type
+
+```C
+typedef unsigned long ulong;
+typedef int* ptr_int;
+```
+
 - Two ways to define strctures (they are equivalent):
+
 ```C
 struct Student
 {
@@ -209,17 +219,24 @@ struct Student
 	int studentID[12];
 	int midtermScore;
 	int finalScore;
-};			// need ; at the end. Don't forget.
-			// Usually strcut name is Capitalized to differenciate with variable names
+};						// need ";" at the end. Don't forget.
 ```
 ```C
-typedef struct
+struct					// An anonymous structure
 {
 	char name[100];
 	int studentID[12];
 	int midtermScore;
 	int finalScore;
-}Student;   // also need ;
+} a_student;   			// Here it declare an instance of this anonymous structure
+
+typedef struct			// typedef: make an alias name for structure
+{
+	char name[100];
+	int studentID[12];
+	int midtermScore;
+	int finalScore;
+} student;   			// Here it defines the structure as "student"
 ```
 - Why structure? Make data easier to organize.
 - How to use structure after defining it? Treat it as a new variable type.
@@ -250,17 +267,10 @@ struct Student MrBean = {		// the standard way of initialization
     .midtermScore = 0, 			// MrBean.studentID = {0};
     .finalScore = 0				// ...
 };
+struct Student MrsBean = {"MrsBean", {0}, 0, 0};
 struct Student *pt = &MrBean;
 printf("%s's midterm score = %d\n", MrBean.name, MrBean.midtermScore);	
 // use . to visit member data.
 printf("%s's final score = %d\n", pt->name, pt->finalScore);			
 // use -> if using pointer.
 ```
-
-
-
-
-
-
-
-
