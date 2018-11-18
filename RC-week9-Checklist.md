@@ -200,6 +200,7 @@ int main ()
 }
 ```
 - As always, you should close the file you open.
+
 ### Structure
 - In C, you can assemble a package of variables into a structure.
 - Define your own datatype.
