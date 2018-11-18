@@ -84,7 +84,7 @@ gets(str);
 
 ```C
 char str[20] = "Hello";
-int len = strlen(str);		// len = 5
+int len = (int)strlen(str);		// len = 5
 ```
 
 - `char * stpcpy(char * dst, const char * src)`: copy the string src to dst (including the terminating `\0` character.)
@@ -123,7 +123,7 @@ printf("%s\n", str_1);		// Hello World!
 
 > **DESCRIPTION**
 
-> The `strchr()` function locates the first occurrence of `c` (converted to a char) in the string pointed to by `s`.  The terminating null character is considered to be part of the string; therefore if c is `\0', the functions locate the terminating `\0'.
+> The `strchr()` function locates the first occurrence of `c` (converted to a char) in the string pointed to by `s`.  The terminating null character is considered to be part of the string; therefore if c is `\0`, the functions locate the terminating `\0'.
 
 - `char * strstr(const char *haystack, const char *needle)`
 
