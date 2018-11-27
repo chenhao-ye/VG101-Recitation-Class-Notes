@@ -210,7 +210,7 @@ printf("%d\n", *(a+10));
 ```C
 int *arr = (int *) malloc(10*sizeof(int));		// allocate an piece of memory 
 												// with the size of 10 ints
-free(arr)										// free the memory
+free(arr);										// free the memory
 ```
 - Life cycles of allocated memory: start with `malloc()`, end with `free()`
 - You **must** free all the memory you allocate.
