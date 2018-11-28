@@ -42,7 +42,7 @@ cout << a << b << c;	// string, char, int. All can be outputed by cout
 - `cout` outputs a bool value will get 1 or 0
 
 ### Overloading
-Note that, an operator is essentially a function with syntax sugar. Overloading means defining functions/operators with the same name but different inputs. When calling the functions, the programming will check the onput to invoke the corresponding functions
+Note that, an operator is essentially a function with syntax sugar. Overloading means defining functions/operators with the same name but different inputs. When calling the functions, the programming will check the input to invoke the corresponding functions
 ```C
 void func(int a) { cout << "It is an int!" << endl; }
 void func(double a) { cout << "It is a double!" << endl; }
@@ -89,26 +89,25 @@ public:
 	int num_element() { return  size; }
 	int available_capacity() { return capacity - size; }
 	bool is_empty() { return size == 0; }
-	void push_back(int x);					// you may take the declaration also as definition
-											// or separate it into a .cpp file
+	void push_back(int x);				// you may take the declaration also as definition
+										// or separate it into a .cpp file
 };
 
 // in .cpp
-void DynamicSizeArray::push_back(int x)		// Notice that, here we lable the namespace of push_back
-	{
-		if (size == capacity)
-		{
-			int * new_array = malloc(2*capacity*sizeof(int));
-			for (int i = 0; i < size; i++)
-				new_array[i] = array[i];
-			free(array);					// Actually we should not use malloc and free in C++
-											// There are more sophisticated functions to do that
-											// Here just to make it easy for you to understand
-			array = new_array;
-		}
-		array[size] = x;
-		size++;
-	}
+void DynamicSizeArray::push_back(int x)	// Notice that, here we lable the namespace of push_back
+{
+    if (size == capacity)
+    {
+        int * new_array = new int[2*capacity];
+        for (int i = 0; i < size; i++)
+            new_array[i] = array[i];
+        delete[] new_array;
+        // new and delete are C++ version of malloc and free
+        array = new_array;
+    }
+    array[size] = x;
+    size++;
+}
 ```
 
 `class` is similar like `struct` in `C`: they both pack up a series of data; but `class` has different intention: it also packs up functions to maintains these data and even set protection of data from accessing outside the class
