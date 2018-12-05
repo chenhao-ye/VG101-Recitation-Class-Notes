@@ -13,11 +13,15 @@ int size = 5;
 int *pArr = new int[size];
 delete[] pArr;   // note the [] here
 ```
+- when you `new` an array, you should delete it by `delete[]`. Using only `delete` here will result in undefined behavior
 - Don't mix with `malloc` and `free`
 - Advantage of `new` over `malloc`
     - `new` is an C++ keyword (no library requirement), `malloc` is a library function
     - `new` will call the constructor, `malloc` will not
     - `new` will return appropreiate pointer type
+    - The intention behind `new` and `malloc` is different
+      - `malloc` is simply requing a piece of memory, so the parameter it requires is the number of bytes requred
+      - `new` is not simply requiring a piece of memory; it always do class construction, so it requires user to indicate the class
 
 ### Reference
 #### Reference Variable
@@ -31,7 +35,24 @@ int &ra = a;    // any change to ra will affect the value of a
 
 #### Reference Variable in Function
 - A very useful techniuque to share variable during function calling
+
+- Reference is somehow a syntax sugar in C++; it is essentially realized by pointer, but it makes code more clean and easy to read
+
+- Convention tips: when we discussing "pass by reference", we may indicate both "pass by pointer" and "pass by reference"; the generalized concept "pass by reference" is as the other side of "pass by value"
+
+- Reference should be binded when initialized
+
+  ```C
+  int x = 4;
+  int& y = x;		// `y` is binded to `x` forever
+  y = 5;			// assignment to `x`
+  int z = 233;
+  y = z;			// it is not binding `z` to `y`
+  				// it is assigning the value of `z` to `y`
+  ```
+
 - Use reference variable as function parameter
+
 - Similar to pointer
 ```C++
 void swap(int &a, int &b)     // function parameters are reference variable
@@ -68,18 +89,117 @@ int main()
 }
 ```
 
-- Distinguish between reference variable and variable address
-    - reference variable is left value
-    - variable address is right value
-
-- Another advantage of reference: a way to pass by address rather than pass by value
+- Another advantage of reference: a more elegant way to pass by reference rather than pass by value
     - In C++, function parameter need to be class object, usually big in size
     - Pass by value require copy the big class object, very inefficient
-    - Pass by address can instantly finish the passing
+    - Pass by reference can instantly finish the passing
+
+### Constructor
+
+- Constructor (ctor) is called automatically when you declare an instance (variable) of a class.
+- Why we need a ctor?
+  - When we view a class as an abstract (a black box) with invariant (some specific rules inside the box), we would expect the invariant is always valid from the time it is created
+    - e.g. the `size` of class `DynamicSizeArray` should equal to the number of elements inside (initialized to zero); the `capacity` should be the side of allocated array so that we will not across the bound
+  - Every time a public function returns, the invariant should be maintance.
+- Ctor should be `public` (only in some tricky case that it can be `private`)
+
+- If the programmer doesn't write any constructors, compiler will automatically synthesize a default constructor for you (taking no argument, call all the ctor of its data members and do nothing else)
+
+  - if you write one, the default one will not be synthesized
+
+  - still suggest add `= default` after the default constructor if you indeed agree with the automatically synthesized ctor
+
+    ```C++
+    class DynamicSizeArray
+    {
+        int* array;
+        int size, capacity;
+    	DynamicSizeArray() = default;	// actually you shouldn't use default here
+        								// all the int will be left as `uninitialized`
+    }
+    ```
+
+- Copy constructor (and move constructor after c++11)
+
+  - ```C++
+    class DynamicSizeArray
+    {
+        ...
+    	DynamicSizeArray(const DynamicSizeArray& other) = default;
+        		// copy ctor should take const reference as the argument	
+        		// default one will perform shallow copy
+    }
+    ```
+
+  - will also be synthesized automatically, but performance shallow copy
+
+  - Aside: shallow copy vs. deep copy
+
+  - ```c++
+    class DynamicSizeArray
+    {
+        ...
+    	DynamicSizeArray(const DynamicSizeArray& other) // deep copy
+        {
+            this->size = other.size; 	// `this` is a pointer to the current instance
+            this->capacity = other.capacity;
+            delete[] array;
+            array = new int[this->capacity];
+            for (int i=0; i<size; i++)
+                array[i] = other.array[i];
+        }
+    }
+    ```
+
+  - `operator=` is somehow also do similar thing as copy ctor (and move ctor)
+
+  - ```c++
+    class DynamicSizeArray
+    {
+        ...
+    	DynamicSizeArray(const DynamicSizeArray& other) // deep copy
+        {
+            this->size = other.size; 	// `this` is a pointer to the current instance
+            this->capacity = other.capacity;
+            delete[] array;
+            array = new int[this->capacity];
+            for (int i=0; i<size; i++)
+                array[i] = other.array[i];
+        }
+        DynamicSizeArray& operator=(const DynamicSizeArray& other) // deep copy
+        {
+            this->size = other.size; 	// `this` is a pointer to the current instance
+            this->capacity = other.capacity;
+            delete[] array;
+            array = new int[this->capacity];
+            for (int i=0; i<size; i++)
+                array[i] = other.array[i];
+            return *this;
+        }
+    }
+    ```
 
 ### Destructor
-- Destructor is called automatically by the compiler when the object goes out of scope.
-    - Constructor is called automatically by the compiler when the object is created.
+
+- Destructor (dtor) is called automatically when the object goes out of scope.
+
+- Dtor is used to do some operations when a class instance's life cycle end and its memory is reclaimed by operating system
+
+- Similar to ctor, dtor will also be synthesized if the programmer doesn't write one
+
+- Dtor must be `public`
+
+- A common usage is to free the memory allocated
+
+- ```c++
+  class DynamicSizeArray
+  {
+      ~DynamicSizeArray { delete[] array; } 
+      			// everytime a DSA gone
+      			// it will free the memory it allocated
+      			// so there will never be any memory leak
+  }
+  ```
 - Syntax similar to constructor 
 ```C++
 public:
@@ -87,7 +207,34 @@ public:
     ~MyClass();       // destructor of MyClass
 ```
 
+### More on `stream`
+
+- `stream` is a commonly used concept in C++ with some special property (e.g. `iostream`, `fstream`, `stringstream`). You may view `stream` as a pipe, and we could fill it with some content from one end, and retrieve the content from the other end of the pipe
+  - `iostream` is taking the keyboard (or other input device) as the one end of pipe
+  - `fstream` is taking the file as one end of pipe
+- All the `stream` will have operators `>>` and `<<`
+- When using `>>`, it will stop everytime it meets white space (blank, `\t`, `\n`), so the most efficient way in C++ to separate words is to use `stringstream`
+
+```C++
+#include <iostream>
+#include <string>
+#include <sstream>	// library required for stringstream
+int main()
+{
+    string word1, word2, word3;
+    string line;
+    // input: "VG101 hello world"
+    getline(cin, line) // now `line`: "VG101      hello world\n"
+    stringstream ss(line) // ctor of stringstream: take a string as the parameter
+    line >> word1 >> word2 >> word3;
+    	// word1: "VG101"
+    	// word2: "hello"
+    	// word3: "world"
+}
+```
+
 ### Default Argument
+
 - A default argument is a value given in the declaration that the compiler automatically inserts if you don’t provide a value in the function call.
 - If function has several argument and some are default, default arguments are always put at the end
 ```C++
@@ -114,21 +261,92 @@ MyList<string> stringList;  // It can even be class object
 ```
 
 #### STL container classes 
-- STL container classes that you should know
-    - string
-    - vector
-- Other STL container classes
-    - deque
-    - list
-    - priority_queue
-    - unordered_map
-    - set
-- After C++11 STL implementation becomes very efficient
-- Use STL when possible, it helps a lot
 
-#### string
-- 
+- Big picture of STL:
+  - Sequential Containers
+    - `vector`
+    - `deque`
+    - `list`
+  - Associative Containers
+    - `map`
+    - `unordered_map`
+    - `set`
+    - `unordered_set`
+    - ...
+  - Container Adapters
+    - Sequential Container Adapters
+      - `stack`
+      - `queue`
+      - `priority_queue`
+    - ...
 
+- STL container classes that this course mainly focuses on
+    - `string`
+    - `vector`
+- After C++11 STL implementation becomes very efficient due to the introducing of right value reference
+- Use STL properly will helps a lot. 
 
 #### vector
-- 
+
+- `#include <vector>`
+- Other member function
+  - Constructor
+    - Default: no argument, no element inside, empty
+    - Copy ctor (copy from another vector with same template)
+  - `empty`: return `true` if the vector is empty
+  - `size`: return the number of element inside the vector
+  - `push_back`: add another element to the end of the vector
+
+```C++
+std::vector<int> v1;		// indicate the template
+std::vector<std::string> vs;
+v1.push_back(4);
+std::vector<int> v2(v1);	// copy element from v1
+```
+
+- Traversal
+
+  - Iterator
+    - iterator is somehow a simulation of pointer for STL container
+    - use `*` to "dereference" an iterator (overloaded); `++` and `--` also be overloaded for iterator
+    - member functions `begin`, `end`: return iterator of the first and "the past of the last" element
+      - don't `*v.end()`
+    - Note: iterator can be invalided by some operation (e.g. `push_back` of vector: if it invovles reallocate, the previous iterator will be invalided). Always be careful for iterator invalided (read document first to see whether a function will result in iterator invalided!)
+  - Index
+    - 
+
+```c++
+std::vector<int> v1;
+v1.push_back(1);
+v1.push_back(2);
+v1.push_back(3);
+v1.push_back(4);
+v1.push_back(5);
+for (std::vector<int>::iterator it=v1.begin(); it!=v1.end(); it++)
+// or you may use `auto` after c++11: `for (auto it=v1.begin(); it!=v1.end(); it++)`
+// `auto` will set the type of variable by the return type of function
+{
+    cout << *it << endl;
+}
+
+for (int i=0; i<v1.size(); i++)
+{
+    
+}
+```
+
+- Reference for further reading: https://en.cppreference.com/w/cpp/container/vector
+
+#### string
+
+- `#include <string>`
+
+- `std::string` is actually a templated (with char) of `std::basic_string`
+
+  - `typedef std::basic_string<char> std::string`
+
+
+- Constructor
+  - default: no argument, no element inside, empty
+  - 
+- Reference for further reading: https://en.cppreference.com/w/cpp/string/basic_string
