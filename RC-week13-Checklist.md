@@ -289,13 +289,14 @@ MyList<string> stringList;  // It can even be class object
 #### vector
 
 - `#include <vector>`
-- Other member function
+- Some member function
   - Constructor
     - Default: no argument, no element inside, empty
     - Copy ctor (copy from another vector with same template)
   - `empty`: return `true` if the vector is empty
   - `size`: return the number of element inside the vector
   - `push_back`: add another element to the end of the vector
+  - `pop_bakc`: remove the last element
 
 ```C++
 std::vector<int> v1;		// indicate the template
@@ -311,9 +312,13 @@ std::vector<int> v2(v1);	// copy element from v1
     - use `*` to "dereference" an iterator (overloaded); `++` and `--` also be overloaded for iterator
     - member functions `begin`, `end`: return iterator of the first and "the past of the last" element
       - don't `*v.end()`
-    - Note: iterator can be invalided by some operation (e.g. `push_back` of vector: if it invovles reallocate, the previous iterator will be invalided). Always be careful for iterator invalided (read document first to see whether a function will result in iterator invalided!)
+    - Note: iterator can be invalided by some operation (e.g. `push_back` of vector: if it invovles reallocatation, the previous iterator will be invalided). Always be careful for iterator invalidation (read document first to see whether a function may result in iterator invalided!)
   - Index
-    - 
+    - `vector` also overload `operator[]`, so you could access it as an array
+    - member function `at`: similar as `operator[]`, but perform cross the boundary check
+  - Why we need iterator if we could traversal by index?
+    - Not all the container support index; but almost all the container provides support on iterator
+    - Iterator may not allow random access (some container cannot operload `+` or `-` for its iterator, e.g. `std::list`)
 
 ```c++
 std::vector<int> v1;
@@ -326,12 +331,13 @@ for (std::vector<int>::iterator it=v1.begin(); it!=v1.end(); it++)
 // or you may use `auto` after c++11: `for (auto it=v1.begin(); it!=v1.end(); it++)`
 // `auto` will set the type of variable by the return type of function
 {
-    cout << *it << endl;
+    std::cout << *it << std::endl;
 }
 
 for (int i=0; i<v1.size(); i++)
 {
-    
+    std::cout << v1[i] << std::endl;
+    // or: std::cout << v1.at(i) << std::endl;
 }
 ```
 
@@ -345,8 +351,40 @@ for (int i=0; i<v1.size(); i++)
 
   - `typedef std::basic_string<char> std::string`
 
+- Some member function
 
-- Constructor
-  - default: no argument, no element inside, empty
-  - 
+  - Constructor
+    - default: no argument, no element inside, empty
+
+    - copy ctor
+
+    - taking a `const char*` as the argument
+
+    - ```c++
+      std::string str1("hello world");
+      char char_array[] = "aloha";
+      std::string str2(char_array);
+      ```
+
+  - `empty`, `push_back`, `pop_back`
+
+  - `size` vs. `length`
+
+  - `append`
+
+  - `c_str`: returns a const pointer to a null-terminated character array with data equivalent to those stored in the string.
+
+  - `operator==`: compare two string
+
+  - `operator+`: concatenate two string
+
+  - `operator[]`: access string as a char array
+
+  - iterator
+
+- Non-member function
+
+  - `stoi`: non-member function convert string to number
+  - `getline`: taking a `istream` and a `string` as argument, read a line from `istream` and store into `string`
+
 - Reference for further reading: https://en.cppreference.com/w/cpp/string/basic_string
