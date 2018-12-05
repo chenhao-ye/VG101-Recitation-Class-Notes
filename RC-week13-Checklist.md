@@ -296,7 +296,7 @@ MyList<string> stringList;  // It can even be class object
   - `empty`: return `true` if the vector is empty
   - `size`: return the number of element inside the vector
   - `push_back`: add another element to the end of the vector
-  - `pop_bakc`: remove the last element
+  - `pop_back`: remove the last element
 
 ```C++
 std::vector<int> v1;		// indicate the template
@@ -388,3 +388,4 @@ for (int i=0; i<v1.size(); i++)
   - `getline`: taking a `istream` and a `string` as argument, read a line from `istream` and store into `string`
 
 - Reference for further reading: https://en.cppreference.com/w/cpp/string/basic_string
+
