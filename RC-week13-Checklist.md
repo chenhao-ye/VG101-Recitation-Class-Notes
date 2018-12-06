@@ -30,6 +30,7 @@ Linked list is another famous and commonly used data structure (after array). Th
 ```C++
 class Node
 {
+public:
     int value;				// You may add more property to a node
     Node* next;
     Node(int val) { this->value = val; next = nullptr; }
@@ -37,6 +38,7 @@ class Node
 
 class LinkedList
 {
+public:
     Node* first;
     LinkedList() { this->first = nullptr; }
     ~LinkedList() {
@@ -181,6 +183,7 @@ int main()
     ```C++
     class DynamicSizeArray
     {
+    public:
         int* array;
         int size, capacity;
     	DynamicSizeArray() = default;	// actually you shouldn't use default here
@@ -193,6 +196,7 @@ int main()
   - ```C++
     class DynamicSizeArray
     {
+    public:
         ...
     	DynamicSizeArray(const DynamicSizeArray& other) = default;
         		// copy ctor should take const reference as the argument	
@@ -210,12 +214,12 @@ int main()
   - ```c++
     class DynamicSizeArray
     {
+    public:
         ...
     	DynamicSizeArray(const DynamicSizeArray& other) // deep copy
         {
             this->size = other.size; 	// `this` is a pointer to the current instance
             this->capacity = other.capacity;
-            delete[] array;
             array = new int[this->capacity];
             for (int i=0; i<size; i++)
                 array[i] = other.array[i];
@@ -228,12 +232,12 @@ int main()
   - ```c++
     class DynamicSizeArray
     {
+    public:
         ...
     	DynamicSizeArray(const DynamicSizeArray& other) // deep copy
         {
             this->size = other.size; 	// `this` is a pointer to the current instance
             this->capacity = other.capacity;
-            delete[] array;
             array = new int[this->capacity];
             for (int i=0; i<size; i++)
                 array[i] = other.array[i];
@@ -266,7 +270,8 @@ int main()
 - ```c++
   class DynamicSizeArray
   {
-      ~DynamicSizeArray { delete[] array; } 
+  public:
+      ~DynamicSizeArray() { delete[] array; } 
       			// everytime a DSA gone
       			// it will free the memory it allocated
       			// so there will never be any memory leak
@@ -299,7 +304,7 @@ int main()
     // input: "VG101 hello world"
     getline(cin, line) // now `line`: "VG101      hello world\n"
     stringstream ss(line) // ctor of stringstream: take a string as the parameter
-    line >> word1 >> word2 >> word3;
+    ss >> word1 >> word2 >> word3;
     	// word1: "VG101"
     	// word2: "hello"
     	// word3: "world"
