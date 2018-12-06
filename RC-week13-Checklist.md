@@ -1,5 +1,5 @@
 # VG101: Introduction to Computer and Programming
-## Week12 Checklist
+## Week13 Checklist
 ### C++ Dynamic Memory Allocation
 - `new` and `delete`: dynamic memory allocation in C++
 - example
@@ -11,10 +11,10 @@ delete pInt;
 // Allocate an integer array of length = 5
 int size = 5;
 int *pArr = new int[size];
-delete[] pArr;   // note the [] here
+delete[] pArr;   // note `[]` here
 ```
-- when you `new` an array, you should delete it by `delete[]`. Using only `delete` here will result in undefined behavior
-- Don't mix with `malloc` and `free`
+- when you `new` an array, you should delete it by `delete[]`. Using only `delete` here will result in **undefined behavior**
+- Don't mix with `malloc` and `free` (again, don't mix using any C-style syntax and C++-style syntax)
 - Advantage of `new` over `malloc`
     - `new` is an C++ keyword (no library requirement), `malloc` is a library function
     - `new` will call the constructor, `malloc` will not
@@ -23,14 +23,82 @@ delete[] pArr;   // note the [] here
       - `malloc` is simply requing a piece of memory, so the parameter it requires is the number of bytes requred
       - `new` is not simply requiring a piece of memory; it always do class construction, so it requires user to indicate the class
 
+### Linked List
+
+Linked list is another famous and commonly used data structure (after array). The basic idea of linked list is, there is a "node", and it contains some information and a pointer to the next node. As long as we keep the first node, we could traverse all the node.
+
+```C++
+class Node
+{
+    int value;				// You may add more property to a node
+    Node* next;
+    Node(int val) { this->value = val; next = nullptr; }
+}
+
+class LinkedList
+{
+    Node* first;
+    LinkedList() { this->first = nullptr; }
+    ~LinkedList() {
+        Node* current = first;
+        while (current)
+        {
+            Node* temp = current;
+            current = current->next;
+            delete temp;
+        }
+    }
+    void push_back(int val)
+    {
+        if (!this->first)		// `first` is nullptr
+        {
+            first = new Node(val);
+            return;
+        }
+        Node* current = first;
+        while (current->next)
+            current = current->next;
+       	// Now we `current` is last node
+        current->next = new Node(val);
+    }
+    Node* search(int val)		// search the node with the same value as `val`
+    {
+        Node* current = this->first;
+        while (current)
+        {
+            if (current->value == val)
+                return current;
+            current = current->next;
+        }
+        return nullptr;
+    }
+    void remove(Node* node)
+    {
+        if (node == this->first)
+        {
+            this->first = node->next;
+            delete node;
+            return;
+        }
+        Node* current = this->first;
+        while (current->next != node)
+            current = current->next;
+        current->next = node->next;
+        delete node;
+    }
+}
+```
+
+There may also be other variation of linked list: doubly linked list, etc.
+
 ### Reference
 #### Reference Variable
 - A reference variable is an alias for another variable. Any changes made through the reference variable are actually performed on the original variable.
-    - Must be initialized and cannot be `NULL`
+    - Must be initialized
     - Cannot change the variable the reference variable refers to
 ```C++
 int a;
-int &ra = a;    // any change to ra will affect the value of a
+int &ra = a;    // any change to `ra` will affect the value of `a`
 ```
 
 #### Reference Variable in Function
@@ -45,7 +113,7 @@ int &ra = a;    // any change to ra will affect the value of a
   ```C
   int x = 4;
   int& y = x;		// `y` is binded to `x` forever
-  y = 5;			// assignment to `x`
+  y = 5;			// assign 5 to `x`
   int z = 233;
   y = z;			// it is not binding `z` to `y`
   				// it is assigning the value of `z` to `y`
@@ -93,6 +161,7 @@ int main()
     - In C++, function parameter need to be class object, usually big in size
     - Pass by value require copy the big class object, very inefficient
     - Pass by reference can instantly finish the passing
+    - If we are sure that we will not change the vaiable inside the function, use `const` reference to avoid mistakenly modifying
 
 ### Constructor
 
@@ -100,10 +169,10 @@ int main()
 - Why we need a ctor?
   - When we view a class as an abstract (a black box) with invariant (some specific rules inside the box), we would expect the invariant is always valid from the time it is created
     - e.g. the `size` of class `DynamicSizeArray` should equal to the number of elements inside (initialized to zero); the `capacity` should be the side of allocated array so that we will not across the bound
-  - Every time a public function returns, the invariant should be maintance.
+  - Every time a public function returns, the invariant should be maintanced.
 - Ctor should be `public` (only in some tricky case that it can be `private`)
 
-- If the programmer doesn't write any constructors, compiler will automatically synthesize a default constructor for you (taking no argument, call all the ctor of its data members and do nothing else)
+- If the programmer doesn't write any constructors, compiler will automatically synthesize a default constructor for you (taking no argument, call all the ctors of its data members and do nothing else)
 
   - if you write one, the default one will not be synthesized
 
@@ -115,7 +184,7 @@ int main()
         int* array;
         int size, capacity;
     	DynamicSizeArray() = default;	// actually you shouldn't use default here
-        								// all the int will be left as `uninitialized`
+        								// all the `int` will be left as `uninitialized`
     }
     ```
 
@@ -133,7 +202,10 @@ int main()
 
   - will also be synthesized automatically, but performance shallow copy
 
-  - Aside: shallow copy vs. deep copy
+  - Aside: shallow copy vs. deep copy; data ownship
+
+    - If the class is holding ownship of some data by memory allocated pointer, simply copy the pointer will result in two instance both holding the address of some piece of memory. If one free the allocated memory, the other's pointer will become a dangling pointer
+    - In such case, we introducing "deep copy." Deep copy not simply copy the value of pointer, but instead, it `new` another piece of memory to store the data, and copy the data one by one from the source instance
 
   - ```c++
     class DynamicSizeArray
@@ -201,11 +273,12 @@ int main()
   }
   ```
 - Syntax similar to constructor 
-```C++
-public:
+
+- ```C++
+  public:
     MyClass();        // constructor of MyClass
     ~MyClass();       // destructor of MyClass
-```
+  ```
 
 ### More on `stream`
 
@@ -262,11 +335,14 @@ MyList<string> stringList;  // It can even be class object
 
 #### STL container classes 
 
+![STL](pic/STL.png)
+
 - Big picture of STL:
   - Sequential Containers
     - `vector`
     - `deque`
     - `list`
+    - ...
   - Associative Containers
     - `map`
     - `unordered_map`
@@ -388,3 +464,15 @@ for (int i=0; i<v1.size(); i++)
   - `getline`: taking a `istream` and a `string` as argument, read a line from `istream` and store into `string`
 
 - Reference for further reading: https://en.cppreference.com/w/cpp/string/basic_string
+
+### Beyond VG101
+
+Where to go after VG101:
+
+- VE280 (Sophomore Summer): C++, some data structure
+- VE281 (Junior Fall): Data structure
+- VE370 (Junior Fall): Computer Organization
+- VE477 (Fall): Algorithm
+- VE482 (Fall): Operating System
+- VE475 (Summer): Cryptography
+- VE489 (Summer): Computer Networks
