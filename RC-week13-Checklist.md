@@ -372,7 +372,7 @@ MyList<string> stringList;  // It can even be class object
   - `empty`: return `true` if the vector is empty
   - `size`: return the number of element inside the vector
   - `push_back`: add another element to the end of the vector
-  - `pop_bakc`: remove the last element
+  - `pop_back`: remove the last element
 
 ```C++
 std::vector<int> v1;		// indicate the template
