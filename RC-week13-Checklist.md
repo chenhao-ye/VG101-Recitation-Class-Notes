@@ -297,13 +297,14 @@ int main()
 #include <iostream>
 #include <string>
 #include <sstream>	// library required for stringstream
+using namespace std;
 int main()
 {
     string word1, word2, word3;
     string line;
     // input: "VG101 hello world"
-    getline(cin, line) // now `line`: "VG101      hello world\n"
-    stringstream ss(line) // ctor of stringstream: take a string as the parameter
+    getline(cin, line); // now `line`: "VG101      hello world\n"
+    stringstream ss(line); // ctor of stringstream: take a string as the parameter
     ss >> word1 >> word2 >> word3;
     	// word1: "VG101"
     	// word2: "hello"
