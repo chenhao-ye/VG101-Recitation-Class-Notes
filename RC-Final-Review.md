@@ -3,7 +3,7 @@
 
 ### About Final Exam
 - 100-minute open-book computer-based exam
-- On` C++`, though compatible `C` code is allowed
+- On ` C++`, though compatible `C` code is allowed
 - Weight a lot in final grade
 - Read the instructions first
 - Put this into your web browser bookmark: https://en.cppreference.com/
@@ -117,7 +117,7 @@ int main()
 {
 	const int *pinky = bar();
 	// *pinky = 6; // will cause an error
-	bar();
+    // int* pint = bar(); // error
 	return 0;
 }
 ```
