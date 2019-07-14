@@ -10,7 +10,7 @@ Please take those notes as "checklists" as their names suggest. We use them as a
 Don't worry, you are not missing anything. The week number is labelled as the actual week number as we taught this course, so in the week that there is no recitation class (e.g. exam week), we may not have notes. In general, just go through the notes with increasing week number, and ignore the gap if there is one.
 
 ### Can I use them for my recitation class?
-Of course! We would love to let these notes keep being helpful! Also, any corrections or suggestions to these notes are welcomed. After all, we also create these notes in our young and naive years, and knowing nothing more than Jon Snow.
+Of course! We would love to let these notes keep being helpful! Also, any corrections or suggestions to these notes are welcomed. After all, we also create these notes in our young and naive years, and knowing nothing more than Jon Snow. If you are also a TA, forking this repository is also welcomed.
 
 ### Does really anyone ask you these "frequent asked questions"?
 Well... Fine... We just want to make a cool title for the Q & A section… Fine… even this question is also made by ourselves...
