@@ -13,7 +13,9 @@ Don't worry, you are not missing anything. The week number is labelled as the ac
 Of course! We would love to let these notes keep being helpful! Also, any corrections or suggestions to these notes are welcomed. After all, we also create these notes in our young and naive years, and knowing nothing more than Jon Snow. If you are also a TA, forking this repository is also welcomed.
 
 ### Does really anyone ask you these "frequent asked questions"?
-Well... Fine... We just want to make a cool title for the Q & A section… Fine… even this question is also made by ourselves...
+Well... Fine... We just want to make a cool title for the Q & A section… 
+
+Fine… even this question is also made up by ourselves...
 
 ## Aside
-We intended to write everything formal in LaTeX, just like [this one](https://github.com/tripack45/VE280-Notes) (btw, check this out! This note is so gorgeous!) but it's just too much work to do for LaTeX, and both of us (Chenhao & Luotian) still want to sleep... We eventually make everything later into Markdown. The weeks before the week 5 are all in the .tex (for easy reading, we keep an pdf for this LaTex slide so that you could view it online).
+We intended to write everything formal in LaTeX, just like [this one](https://github.com/tripack45/VE280-Notes) (btw, check this out! This note is so gorgeous!) but it's just too much work to do for LaTeX, and both of us (Chenhao & Luotian) still want to sleep... We eventually make everything later into Markdown. The notes for weeks before the week 5 are all in the .tex. For easy reading, we keep an pdf for this LaTeX slide so that you could view it online without downloading and compiling it yourself.
